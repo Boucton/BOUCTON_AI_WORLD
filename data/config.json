@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.2",
   "modules": [
     {
       "id": "dr_gourmand",
@@ -7,6 +7,7 @@
       "description": "Simulateur clinique avancé avec scénarios réalistes.",
       "icon": "fa-user-doctor",
       "color": "rose",
+      "tags": ["Simulation", "Médecine", "Urgence", "Jeu de Rôle"],
       "content_file": "data/modules/Dr_GOURMAND/content.md",
       "prompts_file": "data/modules/Dr_GOURMAND/prompts.json",
       "is_core": true,
@@ -18,6 +19,7 @@
       "description": "Hub de prompting intelligent et méthodologie.",
       "icon": "fa-cogs",
       "color": "sky",
+      "tags": ["Méthodologie", "Prompting", "Structure", "Théorie"],
       "content_file": "data/modules/META_IA/content.md",
       "prompts_file": "data/modules/META_IA/prompts.json",
       "is_core": true,
@@ -29,6 +31,7 @@
       "description": "Bibliothèque de prompts prêts à l'emploi.",
       "icon": "fa-code",
       "color": "indigo",
+      "tags": ["Outils", "Productivité", "Copier-Coller"],
       "content_file": "data/modules/CODEX_AI/content.md",
       "prompts_file": "data/modules/CODEX_AI/prompts.json",
       "img": "https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&w=1200&q=80"
@@ -39,6 +42,7 @@
       "description": "Cartographie des connaissances médicales.",
       "icon": "fa-book-medical",
       "color": "teal",
+      "tags": ["Savoir", "Médecine", "EBM", "Sources"],
       "content_file": "data/modules/BIBLIO_GOURMANDE/content.md",
       "prompts_file": "data/modules/BIBLIO_GOURMANDE/prompts.json",
       "img": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1200&q=80"
@@ -49,6 +53,7 @@
       "description": "Guide complet pour maîtriser ce monde.",
       "icon": "fa-book-open",
       "color": "amber",
+      "tags": ["Tutoriel", "Onboarding", "Gamification"],
       "content_file": "data/modules/TUTO_MIEL/content.md",
       "prompts_file": "data/modules/TUTO_MIEL/prompts.json",
       "is_core": true,
