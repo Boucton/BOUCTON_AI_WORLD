@@ -24,7 +24,11 @@ const Sidebar = ({ modules, activeModule, setActiveModule, setView, mysteryUnloc
         {modules.map((module) => {
           const theme = THEMES[module.color] || THEMES.rose;
           const isActive = activeModule === module.id;
-          
+      {module.is_core && (
+  <span className="ml-auto text-[10px] bg-blue-500/20 text-blue-300 px-1.5 py-0.5 rounded border border-blue-500/30">
+    CORE
+  </span>
+)}        
           return (
             <button
               key={module.id}
@@ -35,6 +39,7 @@ const Sidebar = ({ modules, activeModule, setActiveModule, setView, mysteryUnloc
                   : 'text-slate-400 hover:bg-white/5 hover:text-white border border-transparent'
                 }`}
             >
+              
               <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors
                 ${isActive ? `bg-blue-500 text-white shadow-[0_0_15px_rgba(59,130,246,0.5)]` : 'bg-slate-800 group-hover:bg-slate-700'}`}>
                 <i className={`fas ${theme.icon} text-xs`}></i>
