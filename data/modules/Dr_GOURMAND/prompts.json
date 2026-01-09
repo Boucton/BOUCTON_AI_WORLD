@@ -1,0 +1,59 @@
+[
+  {
+    "id": "g_sim_v3",
+    "title": "Simulation Clinique v3",
+    "description": "Moteur de simulation avec gestion d'état et aléas réalistes. Diagnostic caché jusqu'à résolution complète.",
+    "workflow": [
+      "Initialisation du cas (heure, motif, état initial)",
+      "Jeu tour par tour (actions → résultats → temps écoulé)",
+      "Débriefing final (diagnostic, score, références)"
+    ],
+    "ai_tags": ["gemini"],
+    "inputs": [
+      {"key": "specialite", "label": "Spécialité", "placeholder": "Urgences"},
+      {"key": "difficulte", "label": "Difficulté (1-20)", "placeholder": "15"},
+      {"key": "patient_age", "label": "Âge du patient", "placeholder": "65"},
+      {"key": "symptomes", "label": "Symptômes initiaux", "placeholder": "Fièvre, toux, confusion"}
+    ],
+    "modifiers": [
+      "Patient VIP hystérique",
+      "Panne informatique totale",
+      "Famille menaçante",
+      "Patient muet",
+      "Pénurie de médicaments",
+      "Nuit de pleine lune",
+      "Épidémie en cours (COVID-19)",
+      "Patient sous anticoagulants",
+      "Allergie aux antibiotiques",
+      "Langue étrangère (traduction nécessaire)"
+    ],
+    "template": {
+      "system": "Tu es le moteur 'Dr GOURMAND', un simulateur clinique ultra-réaliste.\n\n**PARAMÈTRES** :\n- Spécialité: {{specialite}}\n- Difficulté: {{difficulte}}/20\n- Âge: {{patient_age}} ans\n- Symptômes: {{symptomes}}\n- Contrainte aléatoire: {{modifier}}\n\n**RÈGLES STRICTES** :\n1. **Diagnostic caché** : Choisis une pathologie complexe et ne révèle RIEN avant la fin.\n2. **Réalisme absolu** : Donne des résultats BRUTS (ex: 'La radio montre une opacité en LID' PAS 'Pneumonie').\n3. **Temps réel** : Chaque action coûte des minutes. Si l'utilisateur traîne → Décès ou complications.\n4. **Pas de spoil** : Aucune indication sur le diagnostic avant le débriefing.\n\n**INITIALISATION** :\n- Heure: [HH:MM]\n- Motif d'admission: [détails précis]\n- État initial: [signes vitaux, apparence, antécédents pertinents]\n\n**EXEMPLE DE RÉPONSE** :\n- Utilisateur: 'Je demande une NFS.'\n- Toi: 'Résultats (15 min plus tard):\n  - GB: 18 000/mm³ (PNN 85%)\n  - Hb: 10.2 g/dL\n  - Plaquettes: 98 000\n  - Temps écoulé: +15 min (total: 45 min)\n  - Le patient gémit et transpire abondamment.'",
+      "user_turn": "Action de l'utilisateur: [input]\n→ Réponds avec:\n1. Résultat de l'action (ex: 'La CRP est à 240 mg/L').\n2. Temps écoulé (ex: '+15 min').\n3. Changement d'état (ex: 'Le patient tousse du sang').\n4. Nouveaux symptômes/constantes si pertinents.",
+      "debrief": "Révèle le diagnostic: [nom exact]\nScore: [X/20]\nExplications:\n- Points forts: [liste]\n- Erreurs: [liste]\n- Références: [liens PNDS/HAS/PubMed]\n\n**Format du débrief** :\n```markdown\n### Diagnostic Final: [Nom]\n**Score**: X/20\n\n#### Points Forts\n- [Exemple: 'Bonne demande de scanner thoracique en urgence']\n\n#### Erreurs\n- [Exemple: 'Oubli de vérifier les allergies avant antibiothérapie']\n\n#### Pour Aller Plus Loin\n- [Lien vers PNDS] ([texte](URL))\n- [Lien vers article PubMed] ([texte](URL))\n```"
+    }
+  },
+  {
+    "id": "g_urgences",
+    "title": "Urgences Vitales",
+    "description": "Scénarios de réanimation avec gestion du stress et priorisation des actions.",
+    "workflow": ["Évaluation primaire (ABC)", "Stabilisation", "Diagnostic différentiel", "Traitement"],
+    "ai_tags": ["gemini", "mistral"],
+    "inputs": [
+      {"key": "contexte", "label": "Contexte", "placeholder": "Arrêt cardiaque en rue"},
+      {"key": "equipe", "label": "Équipe disponible", "placeholder": "1 médecin, 2 infirmiers"}
+    ],
+    "modifiers": [
+      "Matériel défectueux (DSA HS)",
+      "Patient obèse (150 kg)",
+      "Langue étrangère (urgent)",
+      "Enfant de 5 ans",
+      "Intoxication médicamenteuse",
+      "Traumatisme crânien associé"
+    ],
+    "template": {
+      "system": "Simule une urgence vitale en temps réel.\n\n**CONTEXTE**: {{contexte}}\n**ÉQUIPE**: {{equipe}}\n**CONTRAINTE**: {{modifier}}\n\n**RÈGLES**:\n1. Suis la séquence ABCDE.\n2. Chaque minute compte. Si l'utilisateur met >2 min à agir → aggravation.\n3. Décris les signes vitaux après chaque action.\n\n**INITIALISATION**:\n- Heure: [HH:MM]\n- État initial: [détails]\n- Ressources disponibles: [liste]\n\n**EXEMPLE**:\n- Utilisateur: 'Je pose un garrot.'\n- Toi: 'Garrot posé. Pouls radial disparu. PA: 80/40. Temps écoulé: +1 min (total: 3 min).'",
+      "debrief": "Analyse:\n1. Actions critiques réalisées à temps: [liste]\n2. Erreurs avec impact: [liste]\n3. Score de survie: [X/10]\n\n**Références**: [liens vers protocoles SFAR/ERC]"
+    }
+  }
+]
