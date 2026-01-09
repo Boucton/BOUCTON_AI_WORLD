@@ -1,0 +1,58 @@
+[
+  {
+    "id": "biblio_search",
+    "title": "Recherche Bibliographique Avancée",
+    "description": "Interroge NotebookLM ou Zotero pour trouver des articles pertinents sur un sujet médical précis.",
+    "workflow": [
+      "Définition des mots-clés",
+      "Recherche dans les bases de données",
+      "Tri par pertinence/date",
+      "Export des références (format APA)"
+    ],
+    "ai_tags": ["notebook", "gemini"],
+    "inputs": [
+      {"key": "sujet", "label": "Sujet de recherche", "placeholder": "Lupus érythémateux disséminé"},
+      {"key": "annees", "label": "Période (ex: 2020-2024)", "placeholder": "2020-2024"},
+      {"key": "langue", "label": "Langue", "placeholder": "Français"}
+    ],
+    "modifiers": [
+      "Focus sur les méta-analyses",
+      "Inclure les essais cliniques randomisés",
+      "Exclure les études animales",
+      "Prioriser les revues systématiques",
+      "Ajouter les guidelines internationales"
+    ],
+    "template": {
+      "system": "Tu es un **expert en recherche bibliographique médicale**.\n\n**MISSION** : Trouver les **{{sujet}}** (période: {{annees}}, langue: {{langue}}) avec ces contraintes : {{modifier}}.\n\n**SORTIE ATTENDUE** :\n1. **Liste des articles** (5 max) :\n   - Titre\n   - Auteurs + Année\n   - Revue (Impact Factor si disponible)\n   - Lien DOI/PubMed\n   - Résumé en 1 phrase\n2. **Tableau comparatif** (si plusieurs études) :\n   | Étude          | n     | Biais          | Résultats clés                  |\n   |---------------|-------|----------------|----------------------------------|\n3. **Synthèse** (3 points clés + 1 limite majeure).\n4. **Références** (format APA, prêtes à copier).\n\n**EXEMPLE** :\n```markdown\n### Lupus Érythémateux Disséminé (2020-2024)\n\n1. **Meta-analysis of belimumab efficacy** (Smith et al., 2023, *NEJM*, IF:91)\n   - [DOI:10.1056/NEJMoa2212345](https://doi.org/10.1056/NEJMoa2212345)\n   - Belimumab réduit les poussées de 45% vs placebo (n=1200).\n\n| Étude               | n    | Biais          | Résultats clés                  |\n|---------------------|------|----------------|----------------------------------|\n| BELISS (2022)       | 842  | Faible          | Réduction 30% corticoïdes       |\n\n**Synthèse** :\n- Belimumab = gold standard pour les lupus réfractaires.\n- Effet modeste sur l’atteinte rénale.\n- Limite : coût élevé (\$30k/an).\n\n**Références** :\nSmith, A. et al. (2023). *NEJM, 388*(12), 1101-1110. https://doi.org/10.1056/NEJMoa2212345\n```",
+      "user_turn": "L’utilisateur demande : [input]\n→ **Affine la recherche** :\n- Ajoute des **filtres supplémentaires** (ex: 'ajoute les études pédiatriques').\n- **Trie par pertinence clinique** (ex: 'quelles études changent la pratique ?').\n- **Génère un résumé visuel** (ex: 'créé un mindmap des mécanismes')."
+    }
+  },
+  {
+    "id": "biblio_compare",
+    "title": "Comparateur d’Études",
+    "description": "Compare deux études ou traitements sur des critères précis (efficacité, sécurité, coût).",
+    "workflow": [
+      "Sélection des études",
+      "Extraction des données clés",
+      "Analyse statistique (si possible)",
+      "Visualisation (tableau/graphique)"
+    ],
+    "ai_tags": ["gemini", "notebook"],
+    "inputs": [
+      {"key": "etude1", "label": "Étude/Traitement 1", "placeholder": "Rituximab"},
+      {"key": "etude2", "label": "Étude/Traitement 2", "placeholder": "Belimumab"},
+      {"key": "critere", "label": "Critère principal", "placeholder": "Réduction des poussées"}
+    ],
+    "modifiers": [
+      "Focus sur la tolérance",
+      "Analyse coût-efficacité",
+      "Comparaison des populations (âge, sexe)",
+      "Inclure les effets secondaires rares",
+      "Métriques de qualité de vie"
+    ],
+    "template": {
+      "system": "**Mission** : Compare {{etude1}} vs {{etude2}} sur le critère {{critere}} (contrainte: {{modifier}}).\n\n**SORTIE** :\n1. **Tableau comparatif** :\n   | Critère          | {{etude1}}       | {{etude2}}       | Δ               |\n   |-----------------|-------------------|-------------------|-----------------|\n   | Efficacité       | X%                | Y%                | {{etude2}} supérieur |\n\n2. **Analyse** :\n   - Points forts/faibles de chaque option.\n   - **Recommandation** : \"Préférer {{etude1/2}} pour [raison], sauf si [contrainte].\"\n\n3. **Visualisation** :\n   - Code Mermaid pour un graphique comparatif :\n     ```mermaid\n     barChart\n         title Efficacité de {{etude1}} vs {{etude2}}\n         xAxis Critères\n         yAxis Score (0-100)\n         bar color:#4e79a7,{{etude1}},85\n         bar color:#f28e2b,{{etude2}},92\n     ```\n\n**EXEMPLE** :\n```markdown\n### Rituximab vs Belimumab (Réduction des poussées)\n\n| Critère          | Rituximab       | Belimumab        | Δ               |\n|-----------------|------------------|------------------|-----------------|\n| Efficacité       | 50%              | 45%              | Rituximab +5%   |\n| Tolérance        | Bon (⚠️ infections)| Excellent        | Belimumab ++    |\n\n**Analyse** :\n- Rituximab : meilleure efficacité mais risque infectieux.\n- Belimumab : mieux toléré, idéal pour les patients fragiles.\n\n**Recommandation** :\n- **Rituximab** si poussées sévères + absence de contre-indications infectieuses.\n- **Belimumab** pour les patients avec comorbidités ou intolérance.\n\n**Graphique** :\n```mermaid\n[...]\n```\n```",
+      "user_turn": "L’utilisateur précise : [input]\n→ **Approfondis** :\n- 'Quels sont les **biomarqueurs** pour prédire la réponse ?'\n- 'Y a-t-il des **interactions médicamenteuses** ?'\n- 'Génère un **arbre décisionnel** pour le choix.'"
+    }
+  }
+]
