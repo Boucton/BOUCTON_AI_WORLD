@@ -119,18 +119,19 @@ const App = () => {
   );
 
   return (
-    <Routes>
-      <Route path="/" element={<Home modules={modules} onStart={() => { addXp(10); navigate('/dashboard'); }} />} />
-      <Route path="/dashboard" element={<MainLayout><Dashboard modules={modules} /></MainLayout>} />
-      <Route path="/playground" element={<MainLayout><Playground /></MainLayout>} />
-      <Route path="/data" element={<MainLayout><DataManager /></MainLayout>} />
-      {/* NOUVELLES ROUTES V2 */}
-      <Route path="/achievements" element={<MainLayout><Achievements xp={xp} level={getLevel(xp)} /></MainLayout>} />
-      <Route path="/timer" element={<MainLayout><FocusTimer /></MainLayout>} />
-      <Route path="/settings" element={<MainLayout><Settings /></MainLayout>} />
-      <Route path="/workflow" element={<MainLayout><WorkflowEngine /></MainLayout>} />
-      <Route path="/module/:moduleId" element={<MainLayout><ModuleView allModules={modules} userData={userData} setUserData={setUserData} addXp={addXp} /></MainLayout>} />
-    </Routes>
+   <Routes>
+  <Route path="/" element={<Home modules={modules} onStart={() => { addXp(10); navigate('/dashboard'); }} />} />
+  <Route path="/dashboard" element={<MainLayout><Dashboard modules={modules} /></MainLayout>} />
+  <Route path="/module/:moduleId" element={<MainLayout><ModuleView allModules={modules} userData={userData} setUserData={setUserData} addXp={addXp} /></MainLayout>} />
+  
+  {/* Commente ces lignes si les fichiers ne sont pas encore créés pour tester */}
+  <Route path="/playground" element={<MainLayout><Playground /></MainLayout>} />
+  <Route path="/data" element={<MainLayout><DataManager /></MainLayout>} />
+  <Route path="/workflow" element={<MainLayout><WorkflowEngine /></MainLayout>} />
+  <Route path="/achievements" element={<MainLayout><Achievements xp={xp} level={getLevel(xp)} /></MainLayout>} />
+  <Route path="/timer" element={<MainLayout><FocusTimer /></MainLayout>} />
+  <Route path="/settings" element={<MainLayout><Settings /></MainLayout>} />
+  </Routes>
   );
 };
 export default App;
