@@ -1,103 +1,90 @@
 import React, { useState, useMemo } from 'react';
 import { THEMES } from '../styles/themes';
 
-const PromptCard = ({ prompt, moduleId, userData, setUserData, isActive, setActivePrompt }) => {
+const PromptCard = ({ prompt, moduleId, isActive, setActivePrompt }) => {
   const [inputs, setInputs] = useState({});
   const [modifier, setModifier] = useState(null);
-  const [spinning, setSpinning] = useState(false);
-  const [copied, setCopied] = useState(false); // <--- NOUVEAU
+  const [copied, setCopied] = useState(false);
   const theme = THEMES[prompt.color || 'rose'];
 
-  const rollDice = () => {
-    setSpinning(true);
-    setTimeout(() => {
-      setModifier(prompt.modifiers[Math.floor(Math.random() * prompt.modifiers.length)]);
-      setSpinning(false);
-    }, 500);
+  const rollDice = (e) => {
+    e.stopPropagation();
+    const randomMod = prompt.modifiers[Math.floor(Math.random() * prompt.modifiers.length)];
+    setModifier(randomMod);
   };
 
   const finalPrompt = useMemo(() => {
-    let template = prompt.template.system;
-    Object.entries(inputs).forEach(([key, value]) => {
-      template = template.replace(`{{${key}}}`, value || `[${key}]`);
-    });
-    template = template.replace('{{modifier}}', modifier || '[Aucune]');
-    return template;
-  }, [inputs, modifier, prompt.template.system]);
+    let t = prompt.template.system;
+    Object.entries(inputs).forEach(([k, v]) => t = t.replace(`{{${k}}}`, v || `[${k}]`));
+    return t.replace('{{modifier}}', modifier || '[Aucune]');
+  }, [inputs, modifier, prompt]);
 
-  const handleInputChange = (key, value) => {
-    setInputs({ ...inputs, [key]: value });
-  };
-
-  const handleCopy = () => {
+  const handleCopy = (e) => {
+    e.stopPropagation();
     navigator.clipboard.writeText(finalPrompt);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000); // Reset après 2 secondes
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
-    <div className={`glass-card rounded-2xl overflow-hidden ${isActive ? 'ring-2 ring-blue-500' : ''}`}>
-      {/* En-tête */}
-      <div className="p-5 border-b border-white/5 bg-white/5 flex justify-between items-start">
-        <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-br ${theme.gradient} shadow-lg`}>
-            <i className={`fas ${theme.icon} text-white`}></i>
-          </div>
-          <div>
-            <h3 className="text-lg font-bold text-white leading-tight">{prompt.title}</h3>
-            <p className="text-xs text-slate-400 mt-1">{prompt.description}</p>
-          </div>
+    <div 
+      onClick={() => setActivePrompt(isActive ? null : prompt.id)}
+      className={`relative group rounded-2xl border transition-all duration-300 cursor-pointer overflow-hidden
+        ${isActive ? 'bg-slate-900 border-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.15)]' : 'bg-slate-800/40 border-white/5 hover:bg-slate-800 hover:border-white/10'}
+      `}
+    >
+      {/* Header Carte */}
+      <div className="p-5 flex items-start gap-4">
+        <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 bg-gradient-to-br ${theme.gradient} shadow-lg text-white font-bold text-xl`}>
+          <i className={`fas ${prompt.icon || 'fa-bolt'}`}></i>
         </div>
-        <button
-          onClick={rollDice}
-          className={`w-8 h-8 rounded-lg flex items-center justify-center bg-slate-800 text-slate-400 hover:text-white transition-all ${spinning ? 'animate-spin text-blue-400' : ''}`}
-          title="Ajouter une contrainte aléatoire"
-        >
-          <i className="fas fa-dice-d20"></i>
-        </button>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-lg font-bold text-white truncate group-hover:text-blue-400 transition-colors">{prompt.title}</h3>
+          <p className="text-xs text-slate-400 line-clamp-2 mt-1">{prompt.description}</p>
+        </div>
+        <div className={`w-6 h-6 rounded-full border border-white/10 flex items-center justify-center text-xs transition-transform ${isActive ? 'rotate-180 bg-white text-black' : 'text-slate-500'}`}>
+          <i className="fas fa-chevron-down"></i>
+        </div>
       </div>
 
-      <div className="p-5 space-y-4">
-        {/* Contrainte Aléatoire */}
-        {modifier && (
-          <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg flex items-center gap-3 animate-fade">
-            <i className="fas fa-bolt text-amber-500"></i>
-            <span className="text-sm text-amber-200 font-medium">{modifier}</span>
+      {/* Contenu Dépliable */}
+      <div className={`overflow-hidden transition-all duration-300 ${isActive ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div className="p-5 pt-0 border-t border-white/5 space-y-4">
+          
+          {/* Inputs */}
+          <div className="grid gap-3 bg-slate-950/50 p-4 rounded-xl border border-white/5">
+            {prompt.inputs.map(input => (
+              <div key={input.key}>
+                <label className="text-[10px] uppercase font-bold text-blue-400 tracking-wider mb-1 block">{input.label}</label>
+                <input 
+                  type="text" 
+                  placeholder={input.placeholder}
+                  onChange={(e) => setInputs({...inputs, [input.key]: e.target.value})}
+                  className="w-full bg-slate-900 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-blue-500 outline-none"
+                  onClick={(e) => e.stopPropagation()}
+                />
+              </div>
+            ))}
           </div>
-        )}
 
-        {/* Champs */}
-        <div className="grid gap-3">
-          {prompt.inputs.map((input) => (
-            <div key={input.key}>
-              <label className="block text-xs text-slate-500 font-bold uppercase mb-1 ml-1">{input.label}</label>
-              <input
-                type="text"
-                placeholder={input.placeholder}
-                onChange={(e) => handleInputChange(input.key, e.target.value)}
-                className="w-full bg-slate-900/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-colors"
-              />
-            </div>
-          ))}
-        </div>
+          {/* Actions */}
+          <div className="flex gap-2">
+             <button onClick={rollDice} className="px-3 py-2 rounded-lg bg-amber-500/10 text-amber-500 text-xs font-bold border border-amber-500/20 hover:bg-amber-500 hover:text-white transition flex items-center gap-2">
+               <i className="fas fa-dice"></i> Aléatoire
+             </button>
+             {modifier && <span className="text-xs text-amber-300 py-2 flex-1 truncate text-right animate-pulse">{modifier}</span>}
+          </div>
 
-        {/* Zone de code et Copie */}
-        <div className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-violet-600 rounded-xl opacity-0 group-hover:opacity-20 transition duration-500"></div>
-          <pre className="relative bg-slate-950 rounded-xl p-4 text-xs text-slate-300 whitespace-pre-wrap border border-white/10 font-mono shadow-inner max-h-60 overflow-y-auto custom-scrollbar">
-            {finalPrompt}
-          </pre>
-          <button
-            onClick={handleCopy}
-            className={`absolute top-2 right-2 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 transition-all ${
-              copied 
-                ? 'bg-green-500 text-white' 
-                : 'bg-slate-800 text-slate-300 hover:bg-white hover:text-slate-900'
-            }`}
-          >
-            <i className={`fas ${copied ? 'fa-check' : 'fa-copy'}`}></i>
-            {copied ? 'Copié !' : 'Copier'}
-          </button>
+          {/* Code Block */}
+          <div className="relative">
+            <pre className="bg-black/50 p-4 rounded-xl text-xs text-slate-300 font-mono whitespace-pre-wrap border border-white/10">
+              {finalPrompt}
+            </pre>
+            <button onClick={handleCopy} className={`absolute top-2 right-2 px-3 py-1 rounded-md text-xs font-bold transition-all flex items-center gap-2 ${copied ? 'bg-green-500 text-white' : 'bg-white text-black hover:bg-blue-400 hover:text-white'}`}>
+              <i className={`fas ${copied ? 'fa-check' : 'fa-copy'}`}></i> {copied ? 'Copié' : 'Copier'}
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
