@@ -68,7 +68,10 @@ const App = () => {
           mysteryUnlocked={mysteryUnlocked}
           onMysteryTrigger={() => setMysteryUnlocked(true)}
         />
-        <main className="flex-1 overflow-auto bg-slate-900 ml-72">
+        <main className="flex-1 h-screen overflow-y-auto bg-slate-950 ml-72 relative z-0">
+  {/* Le z-0 est important pour créer un nouveau contexte d'empilement */}
+  {/* ... contenu ... */}
+</main>
           {view === 'dashboard' ? (
             <Dashboard modules={modules} setView={setView} setActiveModule={setActiveModule} />
           ) : (
