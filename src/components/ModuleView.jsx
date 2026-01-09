@@ -11,7 +11,13 @@ const ModuleView = ({ module, userData, setUserData }) => {
   return (
     <div className="h-full overflow-y-auto bg-slate-950 p-8 md:p-12 custom-scrollbar">
       <div className="max-w-5xl mx-auto">
-        
+        <div className="flex items-center gap-2 text-xs text-slate-500 mb-4 uppercase tracking-widest font-bold">
+  <span><i className="fas fa-home"></i> Accueil</span>
+  <i className="fas fa-chevron-right text-[10px]"></i>
+  <span>Module</span>
+  <i className="fas fa-chevron-right text-[10px]"></i>
+  <span className="text-blue-400">{module.title}</span>
+</div>
         {/* Header Module avec image de fond */}
         <header className="mb-12 relative rounded-3xl overflow-hidden h-64 border border-white/10 group shadow-2xl">
            {/* ... (Garde le code de l'image existant ici) ... */}
