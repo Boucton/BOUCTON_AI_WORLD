@@ -42,13 +42,6 @@ tags: ["médecine", "simulation", "interactif", "pédagogie"]
 3. **Diagnostic final** : Infarctus du myocarde inférieur. **Score: 18/20** (oubli de demander la troponine en urgence).
 
 ---
-**Pour les autres modules** (`meta_ia/content.md`, `codex_ia/content.md`, etc.), ajoute une **section similaire** en haut du fichier avec :
-- Un **bloc YAML** (entre `---`) pour les métadonnées.
-- Une **description claire** des objectifs.
-- Des **exemples concrets**.
-
----
-
 ## 📋 Vue d'ensemble
 
 Dr_GOURMAND est un **cas d'usage complexe** qui démontre comment combiner plusieurs IA (Gemini, Mistral, NotebookLM) pour créer un simulateur médical éducatif, adaptif et tracé. 
