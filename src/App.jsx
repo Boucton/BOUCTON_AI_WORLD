@@ -39,10 +39,21 @@ const App = () => {
     setView('dashboard');
   };
 
-  // Si on est sur la home
-  if (view === 'home') {
-    return <Home onStart={handleStart} />;
-  }
+// Fonction pour naviguer directement vers un module
+   const handleNavigateToModule = (moduleId) => {
+     setActiveModule(moduleId);
+     setView('module');
+   };
+
+   // Si on est sur la home
+   if (view === 'home') {
+     return (
+       <Home 
+         onStart={handleStart} 
+         onNavigate={handleNavigateToModule} // <--- On passe la nouvelle fonction
+       />
+     );
+   }
 
   // Sinon l'application
   return (
