@@ -1,528 +1,367 @@
-# CODEX_IA: Reusable Prompt Library
+# 📘 CODEX_AI
 
-**Last Updated:** 2026-01-09 00:38:55 UTC
+### Bibliothèque modulaire de prompts réutilisables
 
-A comprehensive collection of reusable, modular prompts designed for AI interactions, development, and creative workflows.
+🧠 *BOUCTON_AI_WORLD*
 
----
-
-## Table of Contents
-
-1. [Development & Code](#development--code)
-2. [Content Creation](#content-creation)
-3. [Analysis & Research](#analysis--research)
-4. [Problem Solving](#problem-solving)
-5. [Creative Writing](#creative-writing)
-6. [Professional Communication](#professional-communication)
-7. [Learning & Education](#learning--education)
-8. [Data & Automation](#data--automation)
+**Dernière mise à jour :** 09 janvier 2026
+**Version :** 1.1
 
 ---
 
-## Development & Code
+## 🌍 Introduction générale
 
-### Code Review Template
-```
-Please review the following code for:
-- Code quality and best practices
-- Security vulnerabilities
-- Performance optimization opportunities
-- Test coverage
-- Maintainability and readability
+Le **CODEX_AI** est une bibliothèque structurée de *prompts universels, modulaires et réutilisables*, conçue pour orchestrer efficacement les interactions avec différentes intelligences artificielles (ChatGPT, Gemini, Mistral, NotebookLM, Perplexity, Manus, OpenEvidence).
 
-Code:
-[INSERT CODE HERE]
+Il ne s’agit pas d’une simple collection de requêtes, mais d’un **outil cognitif** visant à :
 
-Provide specific suggestions with reasoning.
-```
+* standardiser les interactions AI,
+* améliorer la qualité des réponses,
+* réduire le bruit et l’approximation,
+* favoriser la reproductibilité et la montée en compétence.
 
-### Documentation Generator
-```
-Generate comprehensive documentation for the following function/module:
+Le CODEX_AI constitue un **socle transversal** utilisable dans tous les modules de BOUCTON_AI_WORLD.
 
-Function/Module:
-[INSERT CODE HERE]
+---
 
-Include:
-- Purpose and overview
-- Parameters with types
-- Return values
-- Usage examples
-- Edge cases and error handling
-- Related functions
-```
+## 🧭 Table des sections
 
-### Bug Analysis Prompt
-```
-I'm experiencing a bug in my [TECHNOLOGY] application. Here's the error:
+| Domaine                       | Finalité principale                         |
+| ----------------------------- | ------------------------------------------- |
+| Développement & Code          | Qualité logicielle, robustesse, maintenance |
+| Création de contenu           | Rédaction, marketing, diffusion             |
+| Analyse & Recherche           | Décision, stratégie, synthèse               |
+| Résolution de problèmes       | Raisonnement structuré                      |
+| Écriture créative             | Narration, personnages, dialogue            |
+| Communication professionnelle | Emails, réunions, présentations             |
+| Apprentissage & pédagogie     | Enseignement, vulgarisation                 |
+| Données & automatisation      | Analyse, workflows, SQL                     |
 
-Error Message:
-[INSERT ERROR]
+---
 
-Context:
-[INSERT RELEVANT CODE/LOGS]
+## 💻 Développement & Code
 
-Steps to reproduce:
-[INSERT STEPS]
+### 🔍 Modèle de revue de code
 
-Expected behavior:
-[INSERT EXPECTED]
+```text
+Analyse le code suivant selon les axes suivants :
+- Qualité globale et bonnes pratiques
+- Sécurité et vulnérabilités potentielles
+- Performances et optimisations possibles
+- Couverture de tests
+- Lisibilité et maintenabilité
 
-Help me:
-1. Identify the root cause
-2. Understand why it's happening
-3. Implement a solution
-4. Prevent similar issues
+Code :
+[INSÉRER LE CODE]
+
+Fournis des recommandations argumentées et concrètes.
 ```
 
-### Test Case Generator
+### 📚 Générateur de documentation
+
+```text
+Génère une documentation complète pour la fonction / le module suivant :
+
+[INSÉRER LE CODE]
+
+Inclure :
+- Objectif et contexte
+- Paramètres (types inclus)
+- Valeurs de retour
+- Exemples d’utilisation
+- Cas limites et gestion des erreurs
+- Fonctions ou modules liés
 ```
-Generate comprehensive test cases for the following function:
 
-Function:
-[INSERT FUNCTION]
+### 🐞 Analyse de bug
 
-Requirements:
-- Cover happy path scenarios
-- Include edge cases
-- Test error handling
-- Provide assertion examples
-- Use [FRAMEWORK] testing framework
+```text
+Je rencontre un bug dans une application utilisant [TECHNOLOGIE].
+
+Message d’erreur :
+[INSÉRER ERREUR]
+
+Contexte :
+[CODE / LOGS PERTINENTS]
+
+Étapes de reproduction :
+[ÉTAPES]
+
+Comportement attendu :
+[ATTENDU]
+
+Aide-moi à :
+1. Identifier la cause racine
+2. Comprendre le mécanisme du bug
+3. Proposer une correction robuste
+4. Prévenir sa réapparition
 ```
 
 ---
 
-## Content Creation
+## ✍️ Création de contenu
 
-### Blog Post Outliner
-```
-Create a detailed outline for a blog post about: [TOPIC]
+### 📰 Plan d’article de blog
 
-Requirements:
-- Target audience: [AUDIENCE]
-- Tone: [TONE: professional/casual/technical/beginner-friendly]
-- Length: [WORD COUNT]
-- Include: data points, examples, actionable advice
+```text
+Crée un plan détaillé pour un article sur : [SUJET]
 
-Format as:
-- H1 Title
+Contraintes :
+- Public cible : [AUDIENCE]
+- Ton : [PRO / ACCESSIBLE / TECHNIQUE]
+- Longueur : [NOMBRE DE MOTS]
+- Inclure données, exemples et conseils actionnables
+
+Structure attendue :
+- Titre (H1)
 - Introduction
-- Main sections with H2 headers
+- Sections principales (H2)
 - Conclusion
-- Call to action
+- Appel à l’action
 ```
 
-### Social Media Content Calendar
-```
-Create a [TIME PERIOD] social media content calendar for [PLATFORM] about [TOPIC/BRAND]
+### 📧 Campagne email
 
-Include:
-- Post dates and times
-- Content themes
-- Captions with hashtags
-- Media type recommendations
-- Engagement strategy
-- Seasonal/trending considerations
-```
+```text
+Rédige une campagne email pour : [OBJECTIF]
 
-### Email Campaign Template
-```
-Draft an email campaign for [PURPOSE]
-
-Requirements:
-- Recipient: [AUDIENCE]
-- Goal: [SPECIFIC OBJECTIVE]
-- Tone: [TONE]
-- Include: subject line, preview text, body, CTA
-- Length: [SPECIFIC LENGTH]
-- Personalization elements: [VARIABLES]
-```
-
-### Product Description Writer
-```
-Write a compelling product description for:
-
-Product: [NAME]
-Target Market: [MARKET]
-Key Features: [LIST FEATURES]
-Brand Voice: [DESCRIBE VOICE]
-
-Include:
-- Hook that grabs attention
-- Benefits (not just features)
-- Social proof elements
-- Clear CTA
-- SEO-friendly language
+Public : [CIBLE]
+Ton : [TON]
+Inclure :
+- Objet
+- Texte de prévisualisation
+- Corps du message
+- Call To Action
+- Personnalisation possible
 ```
 
 ---
 
-## Analysis & Research
+## 📊 Analyse & Recherche
 
-### Market Research Summary
-```
-Provide a market research summary for [PRODUCT/SERVICE/INDUSTRY]
+### 📈 Synthèse d’étude de marché
 
-Include:
-- Current market size and growth trends
-- Key competitors and their positioning
-- Target audience demographics and behaviors
-- Market gaps and opportunities
-- Regulatory or economic factors
-- Recommendations based on findings
+```text
+Réalise une synthèse de marché concernant : [PRODUIT / DOMAINE]
 
-Sources: Cite recent data where possible
-```
+Inclure :
+- Taille et croissance du marché
+- Concurrents clés
+- Cible utilisateur
+- Opportunités et angles inexploités
+- Contraintes réglementaires
+- Recommandations stratégiques
 
-### SWOT Analysis Framework
-```
-Conduct a SWOT analysis for [COMPANY/PRODUCT/STRATEGY]
-
-Strengths:
-- Internal advantages
-
-Weaknesses:
-- Internal limitations
-
-Opportunities:
-- External positive factors
-
-Threats:
-- External challenges
-
-Strategic Recommendations:
-- How to leverage strengths
-- How to address weaknesses
+Sources récentes si possible.
 ```
 
-### Competitive Analysis
-```
-Analyze the competitive landscape for [PRODUCT/SERVICE]
+### ⚖️ Analyse SWOT
 
-For each competitor:
-- Company overview
-- Product/service offerings
-- Pricing strategy
-- Market positioning
-- Strengths and weaknesses
-- Differentiation factors
+```text
+Réalise une analyse SWOT pour : [PROJET / STRATÉGIE]
 
-Provide:
-- Competitive matrix
-- Market positioning chart
-- Recommendations for differentiation
+Forces – Faiblesses – Opportunités – Menaces
+
+Conclure par des recommandations opérationnelles.
 ```
 
 ---
 
-## Problem Solving
+## 🧠 Résolution de problèmes
 
-### Decision-Making Framework
-```
-I need to make a decision between these options:
+### 🧩 Aide à la décision
+
+```text
+Je dois choisir entre les options suivantes :
 1. [OPTION A]
 2. [OPTION B]
 3. [OPTION C]
 
-Context:
-- Constraints: [CONSTRAINTS]
-- Timeline: [TIMELINE]
-- Budget: [BUDGET]
-- Success metrics: [METRICS]
+Contexte :
+- Contraintes
+- Délais
+- Budget
+- Critères de succès
 
-Help me by:
-1. Listing pros and cons of each option
-2. Assessing risks
-3. Evaluating against success criteria
-4. Providing a recommendation with reasoning
+Analyse comparative, risques, puis recommandation argumentée.
 ```
 
-### Root Cause Analysis (5 Whys)
-```
-Problem Statement: [PROBLEM]
+### 🔍 Analyse des causes profondes (méthode des 5 pourquoi)
 
-Help me conduct a root cause analysis by:
-1. Asking "why?" five times in depth
-2. Identifying systemic issues
-3. Finding the root cause
-4. Suggesting preventive measures
-5. Recommending corrective actions
-```
+```text
+Problème :
+[DESCRIPTION]
 
-### Troubleshooting Guide Creator
-```
-Create a troubleshooting guide for [SYSTEM/PRODUCT/PROCESS]
-
-Include:
-- Common issues and symptoms
-- Step-by-step resolution steps
-- When to escalate to support
-- Prevention tips
-- Glossary of technical terms
-- Contact information for advanced support
+Mène une analyse approfondie en posant la question "Pourquoi ?" cinq fois,
+puis propose des mesures correctives et préventives.
 ```
 
 ---
 
-## Creative Writing
+## 🎭 Écriture créative
 
-### Story Prompt Expansion
-```
-Develop a story based on this premise:
+### 📖 Développement d’histoire
 
-Initial Concept: [CONCEPT/PROMPT]
+```text
+Développe une histoire à partir du concept suivant :
+[IDÉE INITIALE]
 
-Provide:
-- Three act structure outline
-- Character development for main characters
-- World-building details
-- Plot twists or conflicts
-- Dialogue sample
-- Thematic elements
-```
-
-### Character Development Sheet
-```
-Create a detailed character profile for [CHARACTER TYPE/ROLE]
-
-Include:
-- Background and history
-- Personality traits (strengths and flaws)
-- Motivations and goals
-- Relationships with other characters
-- Speech patterns and mannerisms
-- Physical description
-- Character arc potential
+Inclure :
+- Structure en trois actes
+- Développement des personnages
+- Univers et règles
+- Tensions et conflits
+- Thèmes majeurs
 ```
 
-### Dialogue Writer
-```
-Write realistic dialogue for this scenario:
+### 🧍 Fiche personnage
 
-Setting: [SETTING]
-Characters: [CHARACTER LIST]
-Situation: [SITUATION]
-Tone: [TONE]
-Objective: [WHAT NEEDS TO HAPPEN]
+```text
+Crée un profil détaillé pour le personnage suivant :
+[TYPE / RÔLE]
 
-Write [NUMBER] lines of dialogue that:
-- Reveals character personality
-- Advances the plot
-- Feels natural and authentic
+Inclure :
+- Passé
+- Traits de personnalité
+- Motivations
+- Relations
+- Arc narratif potentiel
 ```
 
 ---
 
-## Professional Communication
+## 🧑‍💼 Communication professionnelle
 
-### Email Response Template
-```
-Draft a professional email response to:
+### 📩 Réponse email
 
-Original Email: [PASTE EMAIL]
+```text
+Rédige une réponse professionnelle à l’email suivant :
+[EMAIL ORIGINAL]
 
-Tone: [PROFESSIONAL/EMPATHETIC/FORMAL/CASUAL]
-Purpose: [STATE YOUR PURPOSE]
-Key Points to Address: [LIST POINTS]
-
-Requirements:
-- Keep it concise
-- Include clear action items
-- End with appropriate closing
+Ton : [FORMEL / EMPATHIQUE / NEUTRE]
+Objectif : [OBJECTIF]
+Inclure des actions claires et une conclusion adaptée.
 ```
 
-### Presentation Outline
-```
-Create an outline for a presentation on: [TOPIC]
+### 🎤 Plan de présentation
 
-Audience: [AUDIENCE]
-Duration: [TIME]
-Key Message: [MAIN MESSAGE]
+```text
+Crée le plan d’une présentation sur : [SUJET]
 
-Structure:
-- Opening hook
-- 3-5 main points with supporting details
-- Real-world examples
-- Visual recommendations
-- Q&A section
-- Call to action
-```
+Public : [AUDIENCE]
+Durée : [TEMPS]
+Message clé : [MESSAGE]
 
-### Meeting Agenda Template
-```
-Create an agenda for a [TYPE] meeting about [TOPIC]
-
-Include:
-- Meeting objective
-- Attendees and roles
-- Agenda items with time allocations
-- Discussion questions
-- Expected outcomes
-- Pre-reading materials
-- Next steps
+Inclure :
+- Accroche
+- 3–5 points majeurs
+- Exemples concrets
+- Recommandations visuelles
+- Conclusion
 ```
 
 ---
 
-## Learning & Education
+## 🎓 Apprentissage & pédagogie
 
-### Course Curriculum Builder
-```
-Design a comprehensive curriculum for teaching [SUBJECT]
+### 🧪 Construction de programme pédagogique
 
-Target Level: [BEGINNER/INTERMEDIATE/ADVANCED]
-Duration: [TIMEFRAME]
-Target Audience: [LEARNERS]
+```text
+Conçois un programme d’enseignement pour : [SUJET]
 
-Provide:
-- Course overview and learning objectives
-- Module breakdown with topics
-- Lesson plans for each module
-- Assessment methods
-- Projects and hands-on exercises
-- Resources and further learning
-```
+Niveau : [DÉBUTANT / AVANCÉ]
+Durée : [PÉRIODE]
 
-### Study Guide Creator
-```
-Create a study guide for [SUBJECT/TOPIC]
-
-Level: [EDUCATIONAL LEVEL]
-Exam/Assessment: [TYPE]
-
-Include:
-- Key concepts and definitions
-- Summary of major topics
-- Practice questions with answers
-- Common mistakes to avoid
-- Study tips and strategies
-- Reference materials
+Inclure :
+- Objectifs pédagogiques
+- Modules
+- Exercices pratiques
+- Méthodes d’évaluation
+- Ressources complémentaires
 ```
 
-### Explanation Template
-```
-Explain [COMPLEX CONCEPT] in a way that's easy to understand
+### 🧠 Vulgarisation d’un concept
 
-Audience: [SKILL LEVEL]
-Context: [WHERE THEY'LL USE THIS]
+```text
+Explique le concept suivant : [CONCEPT COMPLEXE]
 
-Structure:
-- Simple definition
-- Analogy or comparison
-- Step-by-step breakdown
-- Real-world examples
-- Common misconceptions
-- Practice exercise
+Public : [NIVEAU]
+Inclure :
+- Définition simple
+- Analogie
+- Décomposition progressive
+- Exemple réel
+- Erreurs fréquentes
 ```
 
 ---
 
-## Data & Automation
+## 📂 Données & automatisation
 
-### Data Analysis Request
-```
-Analyze the following dataset:
+### 📊 Analyse de données
 
-Data Source: [SOURCE]
-Data Format: [CSV/JSON/TABLE etc.]
-Data: [INSERT DATA]
+```text
+Analyse le jeu de données suivant :
+[DONNÉES]
 
-Analysis Needed:
-- Key statistics and trends
-- Patterns and anomalies
-- Correlations
-- Visualizations recommendations
-- Insights and implications
-- Recommendations based on data
-
-Assumptions: [STATE ANY ASSUMPTIONS]
+Inclure :
+- Statistiques clés
+- Tendances
+- Corrélations
+- Anomalies
+- Recommandations
 ```
 
-### Automation Workflow Designer
-```
-Design an automation workflow for: [PROCESS]
+### ⚙️ Conception d’automatisation
 
-Current State: [DESCRIBE CURRENT PROCESS]
-Pain Points: [LIST ISSUES]
-Success Metrics: [DEFINE SUCCESS]
+```text
+Conçois un workflow d’automatisation pour :
+[PROCESSUS]
 
-Provide:
-- Step-by-step workflow diagram
-- Tools/platforms needed
-- Integration points
-- Error handling procedures
-- Monitoring and alerts
-- Time and cost savings estimates
-```
-
-### SQL Query Template
-```
-Write a SQL query to: [REQUIREMENT]
-
-Database: [TYPE]
-Tables: [TABLE NAMES]
-Conditions: [FILTERS]
-Expected Output: [DESCRIBE RESULTS]
-
-Requirements:
-- Optimize for performance
-- Include comments
-- Handle NULL values
-- Join relevant tables
-- Sort appropriately
+Inclure :
+- Étapes
+- Outils nécessaires
+- Points d’intégration
+- Gestion des erreurs
+- Gains estimés
 ```
 
 ---
 
-## Usage Guidelines
+## 📜 Bonnes pratiques d’utilisation
 
-### Best Practices
+🟢 Toujours contextualiser
 
-1. **Customization**: Always fill in bracketed sections with specific context
-2. **Iteration**: Use AI responses as starting points, refine based on feedback
-3. **Combination**: Mix and match prompts for complex tasks
-4. **Feedback**: Provide clear feedback to improve AI responses
-5. **Documentation**: Document custom variations for team reuse
+🟢 Considérer les réponses comme une base, jamais comme une vérité
 
-### Template Modification Tips
+🟢 Combiner plusieurs prompts pour les tâches complexes
 
-- Remove sections not relevant to your use case
-- Adjust tone and formality to match your context
-- Add specific constraints or requirements
-- Include examples of expected output format
-- Specify any tools, frameworks, or standards to follow
-
-### Prompt Engineering Best Practices
-
-1. **Be Specific**: The more details, the better the response
-2. **Provide Context**: Explain the situation and background
-3. **State Requirements Clearly**: List must-haves and nice-to-haves
-4. **Give Examples**: Show examples of desired output
-5. **Define Success**: Explain how you'll measure if it worked
-6. **Ask Follow-ups**: Iterate on responses to refine them
+🟢 Versionner les adaptations personnelles
 
 ---
 
-## Version History
+## 🧾 Historique des versions
 
-| Date | Version | Changes |
-|------|---------|---------|
-| 2026-01-09 | 1.0 | Initial creation with core prompt library |
-
----
-
-## Contributing
-
-To add new prompts or improve existing ones:
-
-1. Follow the existing structure and formatting
-2. Include clear sections and examples
-3. Add usage guidelines if needed
-4. Update the version history
-5. Test prompts for clarity and effectiveness
+| Date       | Version | Évolution                                      |
+| ---------- | ------- | ---------------------------------------------- |
+| 09/01/2026 | 1.0     | Création initiale                              |
+| 09/01/2026 | 1.1     | Traduction, structuration, intégration         |
 
 ---
 
-**License**: Open for internal use and adaptation
+## 🤝 Contribution
 
-**Last Reviewed**: 2026-01-09
+Les ajouts doivent :
+
+* respecter la structure,
+* être testés,
+* être documentés,
+* mettre à jour l’historique.
+
+---
+
+**Licence :** Usage interne, adaptable
+
+**Statut :** Socle stable du module `codex_ai`
+
+---
