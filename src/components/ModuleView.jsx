@@ -18,6 +18,21 @@ const ModuleView = ({ module, userData, setUserData }) => {
   <i className="fas fa-chevron-right text-[10px]"></i>
   <span className="text-blue-400">{module.title}</span>
 </div>
+        // Ajoute un état
+const [showScroll, setShowScroll] = useState(false);
+
+// Ajoute un gestionnaire de scroll sur la div principale
+// <div onScroll={(e) => setShowScroll(e.currentTarget.scrollTop > 300)} ... >
+
+// Ajoute le bouton flottant avant la fermeture du composant
+{showScroll && (
+  <button 
+    onClick={() => document.querySelector('.custom-scrollbar').scrollTo({top: 0, behavior: 'smooth'})}
+    className="fixed bottom-8 right-8 w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg hover:bg-blue-500 transition animate-fade z-50"
+  >
+    <i className="fas fa-arrow-up"></i>
+  </button>
+)}
         {/* Header Module avec image de fond */}
         <header className="mb-12 relative rounded-3xl overflow-hidden h-64 border border-white/10 group shadow-2xl">
            {/* ... (Garde le code de l'image existant ici) ... */}
