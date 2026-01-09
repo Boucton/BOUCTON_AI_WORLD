@@ -4,27 +4,28 @@ import Sidebar from './components/Sidebar';
 import ModuleView from './components/ModuleView';
 import Dashboard from './components/Dashboard';
 import Header from './components/Header';
-import Home from './components/Home'; // On importe le nouveau fichier
-import '../styles/global.css';
+import Home from './components/Home';
 
 const App = () => {
   const [modules, setModules] = useState([]);
-  const [activeModule, setActiveModule] = useState(null); // Null au début
-  const [view, setView] = useState('home'); // On commence par 'home'
+  const [activeModule, setActiveModule] = useState(null);
+  const [view, setView] = useState('home'); // On force le démarrage sur 'home'
   const [mysteryUnlocked, setMysteryUnlocked] = useState(false);
   const [userData, setUserData] = useState({});
 
   // Chargement des données
   useEffect(() => {
     const loadModules = async () => {
+      // On charge la config
       const loadedModules = await Promise.all(
         config.modules.map(async (module) => {
           try {
+            // Astuce pour Vite : on importe les fichiers dynamiquement
             const content = await import(`../${module.content_file}?raw`);
             const prompts = await import(`../${module.prompts_file}`);
             return { ...module, content: content.default, prompts: prompts.default };
           } catch (error) {
-            console.error(`Erreur module ${module.id}:`, error);
+            console.error("Erreur module:", module.id, error);
             return module;
           }
         })
@@ -38,35 +39,25 @@ const App = () => {
     setView('dashboard');
   };
 
-  const handleMysteryTrigger = () => {
-    if (!mysteryUnlocked) {
-      setMysteryUnlocked(true);
-      setTimeout(() => {
-        setActiveModule('time');
-        setView('module');
-      }, 600);
-    }
-  };
-
-  // Si on est sur la Home, on affiche juste ça
+  // Si on est sur la home
   if (view === 'home') {
     return <Home onStart={handleStart} />;
   }
 
-  // Sinon on affiche l'application complète
+  // Sinon l'application
   return (
-    <div className="flex flex-col h-screen bg-slate-950 text-slate-200 overflow-hidden">
-      <Header />
-      <div className="flex flex-1 overflow-hidden relative">
+    <div className="flex flex-col h-screen bg-slate-950 text-white">
+      {/* On cache le Header pour l'instant pour simplifier */}
+      <div className="flex flex-1 overflow-hidden">
         <Sidebar
           modules={modules}
           activeModule={activeModule}
-          setActiveModule={setActiveModule}
+          setActiveModule={(id) => { setActiveModule(id); setView('module'); }}
           setView={setView}
           mysteryUnlocked={mysteryUnlocked}
-          onMysteryTrigger={handleMysteryTrigger}
+          onMysteryTrigger={() => setMysteryUnlocked(true)}
         />
-        <main className="flex-1 overflow-hidden relative ml-72"> {/* Marge gauche pour la sidebar */}
+        <main className="flex-1 overflow-auto bg-slate-900 ml-72">
           {view === 'dashboard' ? (
             <Dashboard modules={modules} setView={setView} setActiveModule={setActiveModule} />
           ) : (
