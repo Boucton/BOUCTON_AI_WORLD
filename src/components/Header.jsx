@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import ThemeToggle from './ThemeToggle';
 const Header = ({ xp, level, userName, setUserName }) => { // Ajout de setUserName
   const [time, setTime] = useState(new Date());
   const [isEditing, setIsEditing] = useState(false);
@@ -48,7 +48,14 @@ const Header = ({ xp, level, userName, setUserName }) => { // Ajout de setUserNa
           <span className="text-[10px] text-slate-400 uppercase tracking-widest pl-4">Système Online</span>
         </div>
       </div>
-
+      <div className="flex items-center gap-6">
+  {/* Barre d'XP existante... */}
+  
+  {/* NOUVEAU : Theme Toggle */}
+  <ThemeToggle />
+  
+  {/* Horloge existante... */}
+</div>
       {/* Partie Droite : Gamification & Temps */}
       <div className="flex items-center gap-6">
         {/* Barre d'XP */}
