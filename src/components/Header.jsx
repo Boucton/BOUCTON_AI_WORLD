@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ThemeToggle from './ThemeToggle';
-const Header = ({ xp, level, userName, setUserName }) => { // Ajout de setUserName
+
+const Header = ({ xp, level, userName, setUserName, onOpenNotes, onOpenLibrary, isNotesOpen }) => {
   const [time, setTime] = useState(new Date());
   const [isEditing, setIsEditing] = useState(false);
   const [tempName, setTempName] = useState(userName);
@@ -17,63 +18,110 @@ const Header = ({ xp, level, userName, setUserName }) => { // Ajout de setUserNa
   };
 
   return (
-    <header className="h-16 bg-slate-900/80 backdrop-blur-md border-b border-white/5 flex items-center justify-between px-6 sticky top-0 z-30 ml-72">
+    <header className="h-16 bg-gradient-to-r from-slate-900/90 via-slate-900/80 to-slate-900/90 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-6 sticky top-0 z-40 ml-72 shadow-lg">
+      
       {/* Partie Gauche : Identité & Statut */}
-      <div className="flex items-center gap-4">
-        <div className="flex flex-col">
-          <div className="flex items-center gap-2">
-             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-             
-             {isEditing ? (
-               <form onSubmit={handleNameSubmit}>
-                 <input 
-                   autoFocus
-                   type="text" 
-                   value={tempName} 
-                   onChange={(e) => setTempName(e.target.value)}
-                   onBlur={handleNameSubmit}
-                   className="bg-slate-800 text-white text-sm px-2 py-0.5 rounded border border-blue-500 outline-none"
-                 />
-               </form>
-             ) : (
-               <h2 
-                 onClick={() => setIsEditing(true)}
-                 className="text-white font-bold text-sm tracking-wide cursor-pointer hover:text-blue-400 transition-colors border-b border-transparent hover:border-blue-400/50"
-                 title="Cliquez pour modifier votre nom"
-               >
-                 {userName}
-               </h2>
-             )}
+      <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white font-black text-sm shadow-lg">
+              {userName.charAt(0).toUpperCase()}
+            </div>
+            <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-slate-900 animate-pulse"></div>
           </div>
-          <span className="text-[10px] text-slate-400 uppercase tracking-widest pl-4">Système Online</span>
+          
+          <div className="flex flex-col">
+            {isEditing ? (
+              <form onSubmit={handleNameSubmit} className="flex items-center gap-2">
+                <input 
+                  autoFocus
+                  type="text" 
+                  value={tempName} 
+                  onChange={(e) => setTempName(e.target.value)}
+                  onBlur={handleNameSubmit}
+                  className="bg-slate-800 text-white text-sm px-3 py-1 rounded-lg border border-blue-500 outline-none w-40"
+                />
+                <button type="submit" className="text-emerald-500 hover:text-emerald-400">
+                  <i className="fas fa-check text-xs"></i>
+                </button>
+              </form>
+            ) : (
+              <>
+                <div 
+                  onClick={() => setIsEditing(true)}
+                  className="text-white font-bold text-sm tracking-wide cursor-pointer hover:text-blue-400 transition-colors flex items-center gap-2 group"
+                >
+                  {userName}
+                  <i className="fas fa-pen text-[8px] opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-slate-500 uppercase tracking-widest">{level}</span>
+                  <span className="w-1 h-1 rounded-full bg-emerald-500"></span>
+                  <span className="text-[10px] text-emerald-500 font-mono">{xp} XP</span>
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
-      <div className="flex items-center gap-6">
-  {/* Barre d'XP existante... */}
-  
-  {/* NOUVEAU : Theme Toggle */}
-  <ThemeToggle />
-  
-  {/* Horloge existante... */}
-</div>
-      {/* Partie Droite : Gamification & Temps */}
-      <div className="flex items-center gap-6">
-        {/* Barre d'XP */}
-        <div className="flex items-col gap-1 text-right">
-          <div className="text-xs text-blue-300 font-bold uppercase">{level}</div>
-          <div className="w-32 h-1.5 bg-slate-800 rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-blue-600 to-cyan-400 transition-all duration-1000" style={{ width: `${Math.min(xp % 100, 100)}%` }}></div>
+
+      {/* Partie Centre : Actions Rapides */}
+      <div className="flex items-center gap-2">
+        {/* Bouton Notes */}
+        <button
+          onClick={onOpenNotes}
+          className={`px-3 py-2 rounded-lg flex items-center gap-2 text-xs font-bold transition-all ${
+            isNotesOpen 
+              ? 'bg-blue-600 text-white shadow-lg' 
+              : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
+          }`}
+          title="Carnet de Bord"
+        >
+          <i className="fas fa-note-sticky"></i>
+          <span className="hidden md:inline">Notes</span>
+        </button>
+
+        {/* Bouton Bibliothèque */}
+        <button
+          onClick={onOpenLibrary}
+          className="px-3 py-2 rounded-lg bg-slate-800 text-slate-400 hover:bg-purple-600 hover:text-white flex items-center gap-2 text-xs font-bold transition-all"
+          title="Bibliothèque Secrète"
+        >
+          <i className="fas fa-book-sparkles"></i>
+          <span className="hidden md:inline">Bibliothèque</span>
+        </button>
+
+        {/* Séparateur */}
+        <div className="w-px h-8 bg-white/10 mx-2"></div>
+
+        {/* Theme Toggle */}
+        <ThemeToggle />
+      </div>
+
+      {/* Partie Droite : XP & Temps */}
+      <div className="flex items-center gap-4">
+        {/* Barre d'XP Compacte */}
+        <div className="hidden lg:flex items-center gap-3 bg-slate-800/50 rounded-full px-4 py-2 border border-white/5">
+          <i className="fas fa-star text-amber-400 text-sm"></i>
+          <div className="w-32 h-1.5 bg-slate-900 rounded-full overflow-hidden">
+            <div 
+              className="h-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 transition-all duration-1000 shadow-lg"
+              style={{ width: `${Math.min(xp % 100, 100)}%` }}
+            ></div>
           </div>
-          <div className="text-[10px] text-slate-500">{xp} XP</div>
+          <span className="text-xs font-mono text-slate-400">{xp % 100}/100</span>
         </div>
 
         {/* Horloge */}
-        <div className="pl-6 border-l border-white/10 text-right">
-          <div className="text-lg font-mono text-white leading-none">
-            {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-          </div>
-          <div className="text-[10px] text-slate-500 font-mono">
-            {time.toLocaleDateString()}
+        <div className="flex items-center gap-3 bg-slate-800/50 rounded-full px-4 py-2 border border-white/5">
+          <i className="fas fa-clock text-blue-400 text-sm"></i>
+          <div className="text-right">
+            <div className="text-sm font-mono text-white leading-none font-bold">
+              {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+            </div>
+            <div className="text-[9px] text-slate-500 font-mono">
+              {time.toLocaleDateString('fr-FR', { day: '2-digit', month: 'short' })}
+            </div>
           </div>
         </div>
       </div>
