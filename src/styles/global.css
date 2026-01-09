@@ -2,189 +2,213 @@
 @tailwind components;
 @tailwind utilities;
 
+/* --- POLICES & FOND --- */
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #020617; /* Slate 950 */
+  background-color: #0b1121; /* Bleu nuit très profond */
   color: #e2e8f0;
+  /* Grille de fond subtile pour effet "Papier millimétré digital" */
   background-image: 
-    radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.04), transparent 25%),
-    radial-gradient(circle at 85% 30%, rgba(244, 63, 94, 0.04), transparent 25%);
-  overflow-x: hidden;
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-/* --- UI Elements --- */
-.glass {
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
+/* --- UI COMPONENTS --- */
 .glass-card {
-  background: rgba(30, 41, 59, 0.4);
+  background: rgba(30, 41, 59, 0.6);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
 }
-
 .glass-card:hover {
-  background: rgba(30, 41, 59, 0.7);
-  border-color: rgba(96, 165, 250, 0.3); /* Blue hover hint */
+  border-color: rgba(96, 165, 250, 0.4);
   transform: translateY(-2px);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
-/* --- Animations --- */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes blob {
-  0% { transform: translate(0px, 0px) scale(1); }
-  33% { transform: translate(30px, -50px) scale(1.1); }
-  66% { transform: translate(-20px, 20px) scale(0.9); }
-  100% { transform: translate(0px, 0px) scale(1); }
-}
-
-.animate-fade { animation: fadeIn 0.6s ease-out forwards; }
-.animate-blob { animation: blob 10s infinite; }
-.animation-delay-2000 { animation-delay: 2s; }
-
-/* --- Scrollbar --- */
-.custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+/* --- SCROLLBAR INVISIBLE MAIS FONCTIONNELLE --- */
+.custom-scrollbar::-webkit-scrollbar { width: 6px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(71, 85, 105, 0.5); border-radius: 10px; }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(96, 165, 250, 0.6); }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 20px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
 
-/* --- TYPOGRAPHIE MARKDOWN (L'Optimisation Majeure) --- */
+/* =========================================
+   LE CŒUR DU DESIGN : MARKDOWN STYLING
+   ========================================= */
 
+/* Conteneur global du texte */
 .markdown-content {
-  /* Meilleure lisibilité : on augmente l'interlignage et on grisaille légèrement le texte */
-  @apply text-slate-300 leading-8 text-lg font-light;
+  @apply text-slate-300 font-light;
+  font-size: 1.05rem; /* Texte légèrement plus grand */
+  line-height: 1.85;  /* Interligne très aéré pour la lecture */
 }
 
-/* Titres */
+/* --- TITRES --- */
 .markdown-content h1 {
-  /* On cache le H1 du markdown car on affiche déjà un beau Header graphique */
-  @apply hidden; 
+  @apply hidden; /* On cache le H1 car on a déjà le Header graphique */
 }
 
+/* H2 : Section Majeure */
 .markdown-content h2 {
-  @apply text-2xl font-bold text-white mb-6 mt-12 flex items-center tracking-tight;
-  /* Petite ligne décorative sous le titre */
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  @apply text-2xl md:text-3xl font-bold text-white mt-16 mb-8 flex items-center;
+  letter-spacing: -0.02em;
 }
+/* La petite barre bleue avant le titre */
 .markdown-content h2::before {
   content: '';
-  display: inline-block;
-  width: 8px;
-  height: 24px;
-  background: linear-gradient(to bottom, #3b82f6, #60a5fa);
-  margin-right: 12px;
+  display: block;
+  width: 6px;
+  height: 28px;
+  background: linear-gradient(180deg, #3b82f6, #06b6d4); /* Dégradé Bleu-Cyan */
+  margin-right: 16px;
   border-radius: 4px;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
 }
 
+/* H3 : Sous-section */
 .markdown-content h3 {
-  @apply text-xl font-semibold text-blue-200 mb-4 mt-8 flex items-center;
+  @apply text-xl font-semibold text-blue-200 mt-10 mb-4 flex items-center;
 }
 .markdown-content h3::before {
-  content: '#';
-  @apply text-blue-500/50 mr-2 text-lg font-normal;
+  content: '>';
+  @apply text-blue-500 mr-3 font-mono text-sm opacity-70;
 }
 
-/* Paragraphes et Listes */
+/* --- PARAGRAPHES & LISTES --- */
 .markdown-content p {
-  @apply mb-6;
-}
-.markdown-content ul {
-  @apply list-none ml-2 mb-8 space-y-2;
-}
-.markdown-content ul li {
-  @apply relative pl-6;
-}
-.markdown-content ul li::before {
-  content: '•';
-  @apply absolute left-0 text-blue-500 font-bold;
-}
-.markdown-content ol {
-  @apply list-decimal list-outside ml-6 mb-8 space-y-2 text-slate-400;
-}
-.markdown-content strong {
-  @apply text-white font-bold text-shadow-sm;
+  margin-bottom: 1.5rem;
 }
 
-/* --- LE TABLEAU CLINIQUE (Refonte Totale) --- */
+/* Listes à puces stylisées */
+.markdown-content ul {
+  @apply my-8 space-y-3 pl-2;
+}
+.markdown-content li {
+  @apply relative pl-8 text-slate-300;
+}
+/* Puce personnalisée (Flèche) */
+.markdown-content ul li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+.markdown-content strong {
+  color: #fff;
+  font-weight: 700;
+  /* Surlignage subtil */
+  background: linear-gradient(120deg, rgba(59, 130, 246, 0) 0%, rgba(59, 130, 246, 0.1) 100%);
+  padding: 0 4px;
+  border-radius: 2px;
+}
+
+/* --- TABLEAUX "CLINIQUES" --- */
 .markdown-content table {
   width: 100%;
-  border-collapse: separate;
+  border-collapse: separate; /* Nécessaire pour le border-radius */
   border-spacing: 0;
-  margin: 2.5rem 0;
+  margin: 3rem 0;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 0 1px rgba(0,0,0,0.2);
-  font-size: 0.95rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .markdown-content thead {
-  background: rgba(30, 41, 59, 0.95);
+  background: #1e293b; /* Slate 800 */
 }
 
 .markdown-content th {
-  padding: 16px 20px;
+  padding: 18px 24px;
   text-align: left;
-  font-weight: 700;
-  color: #93c5fd; /* Blue 300 */
-  text-transform: uppercase;
   font-size: 0.75rem;
+  text-transform: uppercase;
   letter-spacing: 0.1em;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  font-weight: 700;
+  color: #94a3b8;
+  border-bottom: 2px solid #334155;
 }
 
 .markdown-content td {
-  padding: 16px 20px;
-  color: #e2e8f0;
+  padding: 16px 24px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  background: rgba(15, 23, 42, 0.3);
-  transition: background 0.2s;
+  background: rgba(15, 23, 42, 0.5);
+  font-size: 0.95rem;
 }
 
 .markdown-content tr:last-child td {
   border-bottom: none;
 }
 
+/* Effet de survol sur les lignes */
 .markdown-content tr:hover td {
-  background: rgba(59, 130, 246, 0.1); /* Highlight bleu au survol */
+  background: rgba(59, 130, 246, 0.1);
 }
 
-/* Citations & Code */
+/* --- BLOCS SPÉCIAUX (Citations & Code) --- */
+
+/* Bloc "Note" ou "Insight" */
 .markdown-content blockquote {
-  @apply border-l-4 border-amber-500 bg-amber-500/5 py-6 px-8 rounded-r-xl italic text-slate-200 my-10 shadow-lg relative;
+  position: relative;
+  background: rgba(245, 158, 11, 0.05); /* Amber tint */
+  border-left: 4px solid #f59e0b;
+  border-radius: 0 12px 12px 0;
+  padding: 24px 32px;
+  margin: 3rem 0;
+  font-style: italic;
+  color: #e2e8f0;
 }
 .markdown-content blockquote::before {
-  content: '"';
-  @apply absolute top-2 left-2 text-4xl text-amber-500/20 font-serif leading-none;
+  content: '\f10d'; /* FontAwesome Quote Icon */
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: #0b1121;
+  padding: 0 8px;
+  color: #f59e0b;
+  font-size: 1.2rem;
+}
+
+/* Bloc de Code */
+.markdown-content pre {
+  background: #0f172a !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 2rem 0;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+.markdown-content pre::after {
+  content: 'SCRIPT';
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #475569;
+  letter-spacing: 1px;
 }
 
 .markdown-content code {
-  @apply bg-slate-800 text-blue-300 px-1.5 py-0.5 rounded text-sm font-mono border border-white/10;
-}
-.markdown-content pre {
-  @apply bg-[#0B1120] p-6 rounded-2xl overflow-x-auto border border-white/10 mb-8 mt-6 shadow-inner relative;
-}
-.markdown-content pre::after {
-  content: 'CODE';
-  @apply absolute top-2 right-4 text-[10px] font-bold text-slate-600 uppercase tracking-widest;
+  color: #93c5fd; /* Blue 300 */
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9em;
 }
 
+/* Liens */
 .markdown-content a {
-  @apply text-blue-400 no-underline border-b border-blue-500/30 transition-all pb-0.5 hover:text-white hover:border-blue-400;
+  color: #60a5fa;
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(96, 165, 250, 0.5);
+  transition: all 0.2s;
 }
-
-/* Ligne de séparation */
-.markdown-content hr {
-  @apply border-white/10 my-16;
+.markdown-content a:hover {
+  color: #fff;
+  border-bottom-style: solid;
 }
