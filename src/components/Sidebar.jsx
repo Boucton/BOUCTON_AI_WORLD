@@ -158,6 +158,10 @@ const Sidebar = ({ modules, activeModule, setActiveModule, setView, mysteryUnloc
           );
         })}
       </nav>
+      
+      <NavLink to="/workflow" className={({ isActive }) => `w-full p-3 rounded-xl flex items-center gap-3 mb-1 transition-all duration-200 font-bold border ${isActive ? 'bg-cyan-600 text-white border-cyan-500 shadow-lg' : 'text-slate-400 border-transparent hover:bg-white/5 hover:text-white'}`}>
+      <i className="fas fa-project-diagram text-lg w-6 text-center"></i> <span>Moteur de Workflow</span>
+      </NavLink>
 
       {/* Footer Sidebar */}
       <div className="p-4 border-t border-white/5 bg-slate-950/30 space-y-2">
