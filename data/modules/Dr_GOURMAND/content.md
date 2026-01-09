@@ -1,51 +1,65 @@
 # 🏥 Dr_GOURMAND — Simulation médicale IA
 
 ## 🎯 Objectifs Pédagogiques
-1. **Apprentissage actif** : Mettre l’utilisateur en situation réelle de prise de décision.
-2. **Gestion du stress** : Simuler des contraintes (temps, ressources, patients difficiles).
-3. **Feedback structuré** : Analyser les erreurs et proposer des axes d’amélioration.
 
-## 📋 Fonctionnalités Clés
+L'objectif de ce module n'est pas seulement de tester vos connaissances, mais de forger vos réflexes cliniques en environnement sécurisé.
 
-| Fonctionnalité | Description |
-| :--- | :--- |
-| **Scénarios dynamiques** | Génération de cas cliniques aléatoires avec diagnostics cachés. |
-| **Contraintes aléatoires** | Injection de paramètres imprévus (ex: pénurie de médicaments). |
-| **Débriefing détaillé** | Analyse post-simulation avec score, erreurs et références bibliographiques. |
-| **Intégration IA** | Utilisation de Gemini/Mistral pour générer des réponses réalistes. |
+* **Apprentissage Actif** : Ne soyez plus spectateur. Prenez des décisions cliniques et assumez-en les conséquences virtuelles.
+* **Gestion du Stress** : Apprenez à prioriser sous la pression du temps et des ressources limitées.
+* **Feedback Immédiat** : Comprenez vos erreurs grâce à une analyse post-simulation détaillée.
 
-## 🚀 Comment Commencer ?
-1. **Choisis un scénario** dans la liste des prompts ci-dessous.
-2. **Remplis les paramètres** (spécialité, difficulté, âge du patient).
-3. **Lance la simulation** et interagis en temps réel.
-4. **Consulte le débriefing** pour progresser.
-
-## ⚠️ Règles du Jeu
-- **Pas de triche** : Le diagnostic est caché jusqu’à la fin.
-- **Temps réel** : Chaque action a un coût temporel.
-- **Réalisme** : Les réponses de l’IA sont basées sur des données médicales réelles.
+> **Note Importante :** Ce simulateur utilise des modèles probabilistes pour générer des réponses physiologiques réalistes. Aucune session ne ressemble à la précédente.
 
 ---
 
-### Exemple de Cas Clinique
+## 📋 Fonctionnalités du Système
 
-**Patient** : Homme, 65 ans, douleurs thoraciques irradiant dans le bras gauche.
-**Contexte** : Antécédents d’HTA et tabagisme actif (30 paquets-année).
+Le moteur Dr_GOURMAND repose sur quatre piliers techniques :
 
-**Déroulement** :
-1. L’utilisateur demande un ECG → L’IA répond : *"ECG: sous-décalage de ST en DII, DIII, aVF. Temps écoulé: +5 min."*
-2. L’utilisateur prescrit de l’aspirine → L’IA : *"Aspirine 250mg IV administrée. Douleur diminue (EVA 4/10). Temps: +2 min."*
-3. **Diagnostic final** : Infarctus du myocarde inférieur. **Score: 18/20** (oubli de demander la troponine en urgence).
+| Fonctionnalité | Description Technique | Bénéfice Utilisateur |
+| :--- | :--- | :--- |
+| **Générateur Aléatoire** | Algorithme de création de scénarios cliniques uniques. | **Imprévisibilité** : Vous ne pouvez pas apprendre les cas par cœur. |
+| **Moteur de Chaos** | Injection d'événements imprévus (pannes, interruptions). | **Adaptabilité** : Apprenez à gérer les "grains de sable". |
+| **Evaluateur IA** | Analyse sémantique de vos réponses vs recommandations HAS. | **Précision** : Un score objectif basé sur les guidelines. |
+| **Horloge Virtuelle** | Chaque action consomme du temps simulé. | **Réalisme** : Le temps devient une ressource vitale. |
 
 ---
 
-## 🏗️ Architecture conceptuelle
+## 🚀 Protocole de Démarrage
 
-### Acteurs
+Pour lancer une simulation, suivez cette procédure stricte :
 
-| Acteur | Rôle |
-| :--- | :--- |
-| **Étudiant** | Pose des questions, propose des diagnostics |
-| **Dr_GOURMAND (IA)** | Incarne le patient, gère la simulation |
-| **Évaluateur (IA)** | Critique la performance de l'étudiant |
-| **Base de connaissances** | Fourni les cas médicaux valides |
+1.  Accédez à la section **Prompts** ci-dessous.
+2.  Sélectionnez le scénario **"Simulation Clinique v3"**.
+3.  Définissez vos paramètres (ex: *Cardiologie, Niveau Difficile, Patient 75 ans*).
+4.  Copiez le prompt et lancez-le dans votre IA (Gemini/Mistral).
+
+---
+
+## ⚠️ Règles d'Engagement
+
+Pour garantir la valeur pédagogique de l'exercice, respectez le contrat moral suivant :
+
+* **Aveugle Strict** : Interdiction de demander le diagnostic à l'IA avant la fin du cas.
+* **Temps Réel** : Agissez comme si la vie du patient était réellement en jeu.
+* **Pharmacologie** : Précisez toujours les dosages (ex: *"Adrénaline 1mg IV"* et non juste *"Adrénaline"*).
+
+> **Avertissement :** L'IA peut simuler des patients non-coopératifs, agressifs ou confus. Gardez votre calme professionnel en toutes circonstances.
+
+---
+
+## 🔬 Autopsie d'un Cas (Exemple)
+
+Voici comment se déroule une interaction typique avec le système.
+
+**Patient :** Homme, 65 ans.
+**Motif :** Douleur thoracique irradiante.
+
+| Étape | Action de l'Utilisateur | Réponse du Système (IA) | Temps |
+| :--- | :--- | :--- | :--- |
+| **1. Triage** | "Je demande un ECG immédiat." | *"ECG réalisé. Sous-décalage ST en DII/DIII. Le patient est pâle."* | +5 min |
+| **2. Traitement** | "Aspirine 250mg IV direct." | *"Injection réalisée. La douleur passe de 8/10 à 4/10."* | +2 min |
+| **3. Erreur** | "J'attends que la douleur passe." | *"Le patient perd connaissance. TA imprenable."* | +15 min |
+
+**Diagnostic Final :** Infarctus inférieur compliqué d'un choc cardiogénique.
+**Score attribuable :** **12/20** (Bon début, mais retard de prise en charge fatale).
