@@ -1,0 +1,30 @@
+[
+  {
+    "id": "meta_workflow",
+    "title": "Création de Workflow META-IA",
+    "description": "Génère un workflow optimisé pour atteindre un objectif précis avec les IA disponibles.",
+    "workflow": [
+      "Définition de l'objectif",
+      "Sélection des outils IA",
+      "Génération des prompts séquentiels",
+      "Exécution et itération",
+      "Centralisation des résultats"
+    ],
+    "ai_tags": ["gemini", "mistral", "notebook"],
+    "inputs": [
+      {"key": "objectif", "label": "Objectif", "placeholder": "Comprendre la physiopathologie du lupus"},
+      {"key": "niveau", "label": "Niveau de détail", "placeholder": "Expert"}
+    ],
+    "modifiers": [
+      "Focus sur les controverses",
+      "Approche pédagogique (schémas)",
+      "Recherche des dernières études (2023-2024)",
+      "Comparaison avec d'autres pathologies",
+      "Traduction en anglais technique"
+    ],
+    "template": {
+      "system": "Tu es un expert en méthodologie META-IA. Crée un workflow **clé en main** pour atteindre l'objectif suivant:\n\n**OBJECTIF**: {{objectif}}\n**NIVEAU**: {{niveau}}\n**CONTRAINTE**: {{modifier}}\n\n**SORTIE ATTENDUE**:\n1. **Séquence d'outils IA** (ex: NotebookLM → Gemini → Mistral).\n2. **Prompts détaillés** pour chaque étape.\n3. **Estimation de temps** et ressources nécessaires.\n4. **Exemple concret** avec le premier prompt à utiliser.\n\n**EXEMPLE DE STRUCTURE**:\n```markdown\n### Workflow pour: [Objectif]\n\n1. **Étape 1: Recherche bibliographique** (NotebookLM)\n   - Prompt: \"Synthétise les 5 dernières méta-analyses sur [sujet] (2020-2024). Format: tableau (auteur, n, biais, conclusions).\"\n   - Temps: 10 min\n\n2. **Étape 2: Approfondissement** (Gemini)\n   - Prompt: \"Explique les mécanismes moléculaires de [sujet] avec analogies visuelles. Génère un schéma Mermaid.\"\n\n3. **Étape 3: Validation** (Mistral)\n   - Prompt: \"Critique les limites des études citées. Propose 3 questions de recherche non résolues.\"\n```",
+      "user_turn": "L'utilisateur a précisé: [input]\n→ Ajoute une étape au workflow ou affine les prompts existants.\n\n**RÈGLES**:\n- Reste **concis et actionnable**.\n- Propose toujours une **alternative** si un outil IA est indisponible.\n- Inclut des **liens vers des ressources** (ex: \"Voir [ce protocole](URL)\")."
+    }
+  }
+]
