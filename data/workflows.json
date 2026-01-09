@@ -1,0 +1,53 @@
+[
+  {
+    "id": "pdf_summary_pro",
+    "title": "Résumé PDF Médical (Niveau Expert)",
+    "description": "Transforme une étude clinique complexe en fiche de synthèse structurée.",
+    "icon": "fa-file-medical",
+    "steps": [
+      {
+        "order": 1,
+        "tool": "NotebookLM",
+        "action": "Upload",
+        "instruction": "Uploadez vos PDF sources dans NotebookLM.",
+        "prompt": "Agis comme un expert en méthodologie clinique. Analyse ces documents et extrais : 1) La question de recherche (PICO) 2) La méthodologie exacte 3) Les biais potentiels 4) Les résultats chiffrés (Odds Ratio, IC95%) 5) La conclusion pratique."
+      },
+      {
+        "order": 2,
+        "tool": "Gemini 1.5 Pro",
+        "action": "Critique",
+        "instruction": "Copiez la synthèse obtenue et collez-la ici pour la critique.",
+        "prompt": "Voici une synthèse d'étude. Agis comme un 'Reviewer 2' hostile. Trouve 3 faiblesses méthodologiques ou logiques dans cette synthèse. Sois impitoyable sur la validité interne."
+      },
+      {
+        "order": 3,
+        "tool": "Claude 3.5 Sonnet",
+        "action": "Rédaction",
+        "instruction": "Générez le rendu final.",
+        "prompt": "En prenant en compte la synthèse et la critique, rédige une fiche de lecture 'Take Home Message' pour un médecin généraliste pressé. Format : Titre, 3 Points Clés, Recommandation Clinique (Oui/Non/Peut-être)."
+      }
+    ]
+  },
+  {
+    "id": "pathology_deep_dive",
+    "title": "Exploration Pathologie (Deep Dive)",
+    "description": "Créer un dossier complet sur une maladie rare ou méconnue.",
+    "icon": "fa-dna",
+    "steps": [
+      {
+        "order": 1,
+        "tool": "Perplexity",
+        "action": "Recherche",
+        "instruction": "Recherche des sources récentes.",
+        "prompt": "Trouve les 5 articles de revue (Review Articles) les plus récents (2020-2024) sur [NOM_PATHOLOGIE]. Fournis les liens PubMed."
+      },
+      {
+        "order": 2,
+        "tool": "ChatGPT-4o",
+        "action": "Structure",
+        "instruction": "Création du plan pédagogique.",
+        "prompt": "À partir de ces sources, crée un plan de cours structuré pour des internes en médecine. Inclure : Physiopathologie, Sémiologie, Diagnostic Différentiel, Traitement."
+      }
+    ]
+  }
+]
