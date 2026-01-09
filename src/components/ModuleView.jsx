@@ -1,171 +1,93 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm'; 
-import PromptCard from './PromptCard';
-import VitalMonitor from './VitalMonitor';
-import ProgressBar from './ProgressBar';
+import remarkGfm from 'remark-gfm';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import AudioPlayer from './AudioPlayer';
+import ImageModal from './ImageModal';
 
-const ModuleView = ({ module, allModules, userData, setUserData, setActiveModule }) => {
-  const [activePrompt, setActivePrompt] = useState(null);
-  const [showScroll, setShowScroll] = useState(false);
+const ModuleView = ({ allModules }) => {
+  const { moduleId } = useParams();
+  const [module, setModule] = useState(null);
+  const [modalImage, setModalImage] = useState(null);
   const [fontSize, setFontSize] = useState(1);
 
+  // Sécurité : On cherche le module, s'il n'existe pas, on ne plante pas.
+  useEffect(() => {
+    if (allModules && allModules.length > 0) {
+      const found = allModules.find(m => m.id === moduleId);
+      setModule(found);
+    }
+  }, [moduleId, allModules]);
+
+  if (!allModules || allModules.length === 0) return <div className="p-20 text-center text-slate-500">Chargement de la base de données...</div>;
+  if (!module) return <div className="p-20 text-center text-red-400">Module introuvable (ID: {moduleId})</div>;
+
+  // Composants Markdown (Design épuré)
   const MarkdownComponents = {
-    h1: ({node, ...props}) => <h1 className="hidden" {...props} />,
-    h2: ({node, ...props}) => (
-        <div className="flex items-center mt-16 mb-6 pb-2 border-b border-white/10">
-        <div className="w-1.5 h-6 bg-current rounded-full mr-3 opacity-80"></div>
-        <h2 className="text-2xl font-bold text-white tracking-tight" style={{ fontSize: `${1.5 * fontSize}rem` }} {...props} />
-        </div>
+    h1: ({node, ...props}) => <h1 className="text-3xl font-black text-slate-900 dark:text-white mt-12 mb-6 border-b border-blue-500/30 pb-4" {...props} />,
+    h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-slate-800 dark:text-blue-100 mt-10 mb-4 flex items-center gap-2" {...props} />,
+    h3: ({node, ...props}) => <h3 className="text-xl font-semibold text-slate-700 dark:text-blue-300 mt-8 mb-3" {...props} />,
+    p: ({node, ...props}) => <p className="text-slate-600 dark:text-slate-300 leading-relaxed mb-6 font-light" style={{ fontSize: `${1.1 * fontSize}rem` }} {...props} />,
+    ul: ({node, ...props}) => <ul className="space-y-2 my-6 pl-4 border-l-2 border-slate-200 dark:border-slate-700" {...props} />,
+    li: ({node, ...props}) => <li className="pl-4 text-slate-600 dark:text-slate-300" {...props} />,
+    blockquote: ({node, ...props}) => <div className="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-500 p-6 my-8 rounded-r-xl italic text-slate-700 dark:text-blue-200" {...props} />,
+    img: ({node, ...props}) => (
+        <img 
+            {...props} 
+            className="rounded-xl shadow-lg border border-slate-200 dark:border-white/10 cursor-zoom-in hover:opacity-90 transition max-w-full my-8 mx-auto" 
+            onClick={() => setModalImage(props.src)}
+        />
     ),
-    h3: ({node, ...props}) => (
-        <h3 className="text-xl font-semibold text-blue-200 mt-10 mb-4 flex items-center" style={{ fontSize: `${1.25 * fontSize}rem` }} {...props}>
-        <span className="opacity-50 mr-2">#</span>{props.children}
-        </h3>
-    ),
-    p: ({node, ...props}) => <p className="text-slate-300 leading-8 mb-6 font-light" style={{ fontSize: `${1.1 * fontSize}rem` }} {...props} />,
-    ul: ({node, ...props}) => <ul className="space-y-3 my-6 pl-4" {...props} />,
-    li: ({node, ...props}) => (
-        <li className="relative pl-6 text-slate-300 leading-7" style={{ fontSize: `${1.1 * fontSize}rem` }}>
-        <span className="absolute left-0 top-2.5 w-1.5 h-1.5 bg-blue-500 rounded-full"></span>{props.children}
-        </li>
-    ),
-    blockquote: ({node, ...props}) => (
-        <div className="bg-white/5 border-l-4 border-blue-500 p-6 my-8 rounded-r-xl relative overflow-hidden" style={{ fontSize: `${1.1 * fontSize}rem` }}>
-        <div className="absolute top-0 right-0 opacity-10 text-6xl pointer-events-none">❝</div>
-        <div className="text-blue-100 italic relative z-10" {...props} />
-        </div>
-    ),
-    table: ({node, ...props}) => (
-        <div className="overflow-x-auto my-8 rounded-xl border border-white/10 shadow-2xl bg-slate-900/50">
-        <table className="w-full text-left border-collapse" {...props} />
-        </div>
-    ),
-    thead: ({node, ...props}) => <thead className="bg-slate-800 text-blue-300 uppercase text-xs font-bold tracking-wider" {...props} />,
-    th: ({node, ...props}) => <th className="p-4 border-b border-white/10" {...props} />,
-    td: ({node, ...props}) => <td className="p-4 border-b border-white/5 text-slate-400 whitespace-nowrap md:whitespace-normal" {...props} />,
-    code: ({node, inline, ...props}) => inline 
-        ? <code className="bg-slate-800 text-amber-300 px-1.5 py-0.5 rounded text-sm font-mono border border-white/10" {...props} />
-        : <pre className="bg-[#0f172a] p-4 rounded-xl overflow-x-auto border border-white/10 my-6 shadow-inner text-sm text-slate-300" {...props} />,
-    a: ({node, ...props}) => <a className="text-blue-400 hover:text-white underline underline-offset-4 decoration-blue-500/30 hover:decoration-white transition-all" {...props} />
+    code: ({node, inline, className, children, ...props}) => {
+        const match = /language-(\w+)/.exec(className || '');
+        return !inline && match ? (
+            <div className="rounded-xl overflow-hidden my-6 shadow-xl text-sm">
+                <SyntaxHighlighter style={vscDarkPlus} language={match[1]} PreTag="div" {...props}>{String(children).replace(/\n$/, '')}</SyntaxHighlighter>
+            </div>
+        ) : ( <code className="bg-slate-200 dark:bg-slate-800 text-red-500 dark:text-amber-300 px-1.5 py-0.5 rounded text-sm font-mono" {...props}>{children}</code> );
+    },
+    a: ({node, ...props}) => <a className="text-blue-600 dark:text-blue-400 hover:underline font-medium" {...props} />
   };
-
-  const handleScroll = (e) => setShowScroll(e.currentTarget.scrollTop > 300);
-  const scrollToTop = () => document.querySelector('.module-scroll-container')?.scrollTo({ top: 0, behavior: 'smooth' });
-
-  const copyForPodcast = () => {
-    const script = `CONTEXTE: Ceci est un contenu éducatif pour le projet BOUCTON_AI_WORLD.\nCONTENU À SYNTHÉTISER:\n\n${module.content}`;
-    navigator.clipboard.writeText(script);
-    window.dispatchEvent(new CustomEvent('show-toast', { detail: '📔 Script copié pour NotebookLM !' }));
-  };
-
-  const relatedModules = allModules?.filter(m => m.id !== module.id && m.tags?.some(t => module.tags?.includes(t))).slice(0, 3) || [];
-
-  if (!module) return (
-    <div className="p-20 text-center text-slate-500">
-      <i className="fas fa-spinner fa-spin text-4xl mb-4"></i>
-      <p>Chargement du module...</p>
-    </div>
-  );
 
   return (
-    <div className="h-full overflow-y-auto bg-slate-950 custom-scrollbar scroll-smooth module-scroll-container" onScroll={handleScroll}>
-      
-      {/* Barre de progression FIXE */}
-      <ProgressBar moduleId={module.id} content={module.content} />
+    <div className="min-h-full pb-20 animate-fade">
+      {/* Bannière Hero */}
+      <div className="relative h-64 md:h-80 w-full overflow-hidden">
+         <div className="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-slate-950 via-transparent to-transparent z-10"></div>
+         <img src={module.img} className="w-full h-full object-cover" alt="Cover" onError={(e) => e.target.style.display='none'} />
+         
+         <div className="absolute bottom-0 left-0 p-8 z-20 max-w-4xl">
+             <div className="flex items-center gap-2 mb-2">
+                 <span className="px-3 py-1 bg-blue-600 text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg">Module</span>
+                 {module.is_core && <span className="px-3 py-1 bg-amber-500 text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg">Core System</span>}
+             </div>
+             <h1 className="text-4xl md:text-6xl font-black text-slate-900 dark:text-white leading-tight drop-shadow-lg">{module.title}</h1>
+         </div>
+      </div>
 
-      <div className="max-w-5xl mx-auto p-6 md:p-12">
-        
-        {/* Contrôles Zen */}
-        <div className="mb-8 flex justify-between items-end animate-fade">
-           <div className="flex items-center gap-2 text-[10px] text-slate-500 uppercase tracking-widest font-bold">
-              <i className="fas fa-circle text-[4px] text-blue-500"></i>
-              <span>{module.title}</span>
-           </div>
-           
-           <div className="flex gap-3">
-               {/* Contrôle Taille Police */}
-               <div className="flex items-center bg-slate-800 rounded-full border border-white/10 p-1">
-                   <button onClick={() => setFontSize(1)} className={`w-6 h-6 rounded-full flex items-center justify-center text-xs transition ${fontSize === 1 ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}>A</button>
-                   <button onClick={() => setFontSize(1.1)} className={`w-6 h-6 rounded-full flex items-center justify-center text-sm transition ${fontSize === 1.1 ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}>A</button>
-                   <button onClick={() => setFontSize(1.25)} className={`w-6 h-6 rounded-full flex items-center justify-center text-base transition ${fontSize === 1.25 ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}>A</button>
-               </div>
-               
-               <button onClick={copyForPodcast} className="text-[10px] flex items-center gap-2 bg-slate-800 hover:bg-white hover:text-black px-3 py-1.5 rounded-full transition-colors border border-white/10">
-                  <i className="fas fa-podcast"></i> NotebookLM
-               </button>
-           </div>
-        </div>
-           
-        {/* Header Image */}
-        <div className="relative rounded-3xl overflow-hidden h-64 md:h-80 border border-white/10 shadow-2xl group mb-12 animate-fade">
-             <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-900/80 to-transparent z-10"></div>
-             <img src={module.img} className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" alt="Cover" />
-             <div className="absolute bottom-0 left-0 p-8 md:p-12 z-20 max-w-2xl">
-                <h1 className="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">{module.title}</h1>
-                <p className="text-lg text-slate-300 font-light leading-relaxed border-l-2 border-blue-500 pl-4 bg-slate-950/50 backdrop-blur-sm rounded-r-lg py-2 pr-4">
-                  {module.description}
-                </p>
+      <div className="max-w-4xl mx-auto px-6 -mt-10 relative z-30">
+        {/* Barre d'outils Flottante */}
+        <div className="glass-card p-4 rounded-2xl flex items-center justify-between mb-12 shadow-xl">
+             <div className="text-sm text-slate-500 dark:text-slate-400 font-medium pl-2">{module.description}</div>
+             <div className="flex gap-2">
+                <AudioPlayer text={module.content} />
+                <div className="h-8 w-[1px] bg-slate-200 dark:bg-white/10 mx-2"></div>
+                <button onClick={() => setFontSize(Math.max(0.8, fontSize - 0.1))} className="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-blue-500 transition"><i className="fas fa-minus text-xs"></i></button>
+                <button onClick={() => setFontSize(Math.min(1.5, fontSize + 0.1))} className="w-8 h-8 flex items-center justify-center text-slate-500 hover:text-blue-500 transition"><i className="fas fa-plus text-xs"></i></button>
              </div>
         </div>
 
-        {module.id === 'dr_gourmand' && <VitalMonitor />}
-
-        {/* CONTENU TEXTUEL */}
-        <div className="flex flex-col lg:flex-row gap-12 animate-fade animation-delay-500">
-             <div className="flex-1 min-w-0">
-                <ReactMarkdown components={MarkdownComponents} remarkPlugins={[remarkGfm]}>
-                    {module.content}
-                </ReactMarkdown>
-            </div>
-        </div>
-
-        {/* Section Prompts */}
-        {module.prompts && module.prompts.length > 0 && (
-          <div className="mt-24 pt-12 border-t border-white/10">
-              <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-                  <span className="w-8 h-8 rounded bg-blue-600 flex items-center justify-center text-sm"><i className="fas fa-terminal"></i></span>
-                  Prompts Disponibles ({module.prompts.length})
-              </h2>
-              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                {module.prompts.map((prompt) => (
-                    <PromptCard key={prompt.id} prompt={prompt} moduleId={module.id} 
-                      userData={userData} setUserData={setUserData} 
-                      isActive={activePrompt === prompt.id} setActivePrompt={setActivePrompt} 
-                    />
-                ))}
-              </div>
-          </div>
-        )}
-
-        {/* Synapses */}
-        {relatedModules.length > 0 && (
-            <div className="mt-20 pt-10 border-t border-white/5">
-                <h3 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6 flex items-center gap-2">
-                  <i className="fas fa-project-diagram"></i>
-                  Connexions Neuronales
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {relatedModules.map(rm => (
-                        <button key={rm.id} onClick={() => setActiveModule(rm.id)} className="text-left p-4 rounded-xl bg-slate-900 border border-white/5 hover:border-blue-500/50 hover:bg-slate-800 transition group">
-                            <div className="text-xs text-blue-500 font-bold mb-1">{rm.title}</div>
-                            <div className="text-xs text-slate-400 line-clamp-2 group-hover:text-slate-300">{rm.description}</div>
-                        </button>
-                    ))}
-                </div>
-            </div>
-        )}
+        {/* CONTENU PRINCIPAL */}
+        <article className="markdown-content">
+            <ReactMarkdown components={MarkdownComponents} remarkPlugins={[remarkGfm]}>
+                {module.content}
+            </ReactMarkdown>
+        </article>
       </div>
 
-      {/* Bouton Scroll to Top */}
-      <button 
-        onClick={scrollToTop} 
-        className={`fixed bottom-8 right-8 w-12 h-12 bg-blue-600 hover:bg-blue-500 text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all z-40 ${
-          showScroll ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        <i className="fas fa-arrow-up"></i>
-      </button>
+      <ImageModal src={modalImage} isOpen={!!modalImage} onClose={() => setModalImage(null)} />
     </div>
   );
 };
