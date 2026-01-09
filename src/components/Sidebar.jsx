@@ -3,7 +3,7 @@ import { THEMES } from '../styles/themes';
 
 const Sidebar = ({ modules, activeModule, setActiveModule, setView, mysteryUnlocked, onMysteryTrigger }) => {
   return (
-    <aside className="w-72 h-screen fixed left-0 top-0 flex flex-col bg-slate-900/95 backdrop-blur-xl border-r border-white/10 z-40 shadow-2xl">
+    <aside className="w-72 h-screen fixed left-0 top-0 flex flex-col bg-slate-900/95 backdrop-blur-xl border-r border-white/10 z-40 shadow-2xl transition-all duration-500 ${mysteryUnlocked ? 'border-r-amber-500/50 shadow-[0_0_50px_rgba(245,158,11,0.2)]' : 'border-r-white/10'}`}>">
       {/* Logo */}
       <div className="p-6 cursor-pointer group" onClick={() => setView('home')}>
         <div className="flex items-center gap-3 mb-1">
