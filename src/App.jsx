@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard';
 import Home from './components/Home';
 import Header from './components/Header';
 import Launchpad from './components/Launchpad';
+import SecretLibrary from './components/SecretLibrary';
 import NotesPanel from './components/NotesPanel';
 import { THEMES } from './styles/themes';
 
