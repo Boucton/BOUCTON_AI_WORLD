@@ -9,11 +9,7 @@ const ModuleView = ({ module, userData, setUserData }) => {
 
   // Gestion du scroll
   const handleScroll = (e) => {
-    if (e.currentTarget.scrollTop > 300) {
-      setShowScroll(true);
-    } else {
-      setShowScroll(false);
-    }
+    setShowScroll(e.currentTarget.scrollTop > 300);
   };
 
   const scrollToTop = () => {
@@ -21,24 +17,24 @@ const ModuleView = ({ module, userData, setUserData }) => {
     if (container) container.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (!module) return <div className="p-10 text-slate-400 flex items-center justify-center h-full animate-pulse">Chargement des données biométriques...</div>;
+  if (!module) return <div className="p-10 text-slate-400 flex items-center justify-center h-full animate-pulse">Chargement des données...</div>;
 
   return (
     <div 
       className="h-full overflow-y-auto bg-slate-950 custom-scrollbar relative scroll-smooth"
       onScroll={handleScroll}
     >
-      <div className="max-w-6xl mx-auto p-6 md:p-12">
+      <div className="max-w-7xl mx-auto p-6 md:p-12">
         
         {/* Fil d'Ariane */}
         <div className="flex items-center gap-2 text-[10px] text-slate-500 mb-8 uppercase tracking-[0.2em] font-bold animate-fade">
-            <span className="hover:text-white cursor-pointer transition-colors"><i className="fas fa-home"></i> ACCUEIL</span>
+            <span><i className="fas fa-home"></i> ACCUEIL</span>
             <i className="fas fa-chevron-right text-[8px] opacity-30"></i>
             <span className="text-blue-500">{module.title.toUpperCase()}</span>
         </div>
 
-        {/* Header Module Visuel */}
-        <header className="mb-16 relative rounded-3xl overflow-hidden h-80 border border-white/10 group shadow-2xl animate-fade">
+        {/* HEADER VISUEL (Pleine Largeur) */}
+        <header className="mb-20 relative rounded-3xl overflow-hidden h-80 border border-white/10 group shadow-2xl animate-fade">
            <div className="absolute inset-0 bg-slate-900">
              <div className="w-full h-full opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cube-coat.png')]"></div>
            </div>
@@ -47,9 +43,7 @@ const ModuleView = ({ module, userData, setUserData }) => {
             src={module.img}
             className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-1000 grayscale hover:grayscale-0"
             alt={module.title}
-            onError={(e) => {
-                e.target.style.display = 'none'; 
-            }}
+            onError={(e) => { e.target.style.display = 'none'; }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
           
@@ -62,9 +56,10 @@ const ModuleView = ({ module, userData, setUserData }) => {
           </div>
         </header>
 
-        {/* CONTENU TEXTUEL (Centré et optimisé pour la lecture) */}
-        <div className="flex justify-center mb-20 animate-fade animation-delay-500">
-             <div className="w-full max-w-4xl bg-slate-900/0">
+        {/* CONTENU TEXTUEL (COLONNE CENTRALE OPTIMISÉE) */}
+        {/* C'est ici qu'on contraint la largeur pour la lisibilité "Livre/Magazine" */}
+        <div className="flex justify-center mb-24 animate-fade animation-delay-500">
+             <div className="w-full max-w-3xl"> 
                 <div className="markdown-content">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                         {module.content}
@@ -73,7 +68,7 @@ const ModuleView = ({ module, userData, setUserData }) => {
             </div>
         </div>
 
-        {/* Section Prompts (Largeur complète) */}
+        {/* Section Prompts (Pleine largeur à nouveau) */}
         <div className="border-t border-white/10 pt-16">
             <div className="flex items-center justify-between mb-10">
                 <h2 className="text-3xl font-bold text-white flex items-center gap-4">
@@ -82,9 +77,6 @@ const ModuleView = ({ module, userData, setUserData }) => {
                     </span>
                     <span>Centre de Commandes</span>
                 </h2>
-                <div className="text-xs text-slate-500 uppercase tracking-widest font-bold">
-                    {module.prompts ? module.prompts.length : 0} Scripts Disponibles
-                </div>
             </div>
             
             {module.prompts && module.prompts.length > 0 ? (
@@ -104,7 +96,7 @@ const ModuleView = ({ module, userData, setUserData }) => {
             ) : (
                 <div className="p-12 border border-dashed border-white/10 rounded-3xl text-center text-slate-500 bg-slate-900/30 flex flex-col items-center">
                     <i className="fas fa-box-open text-5xl mb-4 opacity-30"></i>
-                    <p className="text-lg">Aucun outil de commande détecté pour ce module.</p>
+                    <p className="text-lg">Aucun script disponible pour le moment.</p>
                 </div>
             )}
         </div>
