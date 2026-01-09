@@ -12,31 +12,35 @@ const App = () => {
   const [mysteryUnlocked, setMysteryUnlocked] = useState(false);
   const [userData, setUserData] = useState({});
 
-  // Chargement des données (VERSION ROBUSTE VITE)
+  // Chargement des données (VERSION FILTRE ANTI-BRUIT)
   useEffect(() => {
     const loadModules = async () => {
-      // 1. On liste tous les fichiers possibles via import.meta.glob
+      // 1. On liste tous les fichiers possibles
       const allMarkdown = import.meta.glob('../data/modules/**/*.md', { as: 'raw' });
       const allPrompts = import.meta.glob('../data/modules/**/*.json');
 
       const loadedModules = await Promise.all(
         config.modules.map(async (module) => {
           try {
-            // On reconstruit le chemin relatif depuis ce fichier
+            // On reconstruit le chemin relatif
             const mdPath = `../${module.content_file}`;
             const jsonPath = `../${module.prompts_file}`;
 
-            // On vérifie si les fichiers existent dans notre liste
             if (!allMarkdown[mdPath] || !allPrompts[jsonPath]) {
               console.warn(`Fichiers manquants pour le module : ${module.id}`);
               return module;
             }
 
-            // On charge le contenu
-            const content = await allMarkdown[mdPath]();
+            // Chargement du contenu brut
+            const rawContent = await allMarkdown[mdPath]();
+            
+            // --- LE NETTOYAGE EST ICI ---
+            // Cette expression régulière enlève tout ce qui est entre les deux premiers '---'
+            const cleanContent = rawContent.replace(/^---[\s\S]*?---\s*/, '');
+
             const promptsModule = await allPrompts[jsonPath]();
 
-            return { ...module, content: content, prompts: promptsModule.default };
+            return { ...module, content: cleanContent, prompts: promptsModule.default };
           } catch (error) {
             console.error("Erreur chargement module:", module.id, error);
             return module;
@@ -62,11 +66,11 @@ const App = () => {
          setMysteryUnlocked(true);
      }
   };
-// Si on est sur la home
+
   if (view === 'home') {
     return (
       <Home 
-        modules={modules} // <--- C'EST ICI QU'ON PASSE LES DONNÉES
+        modules={modules}
         onStart={handleStart} 
         onNavigate={handleNavigateToModule} 
       />
