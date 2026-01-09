@@ -17,6 +17,7 @@ import FocusTimer from './components/FocusTimer';
 import Settings from './components/Settings';
 
 const App = () => {
+  const [theme, setTheme] = useState(() => localStorage.getItem('boucton_theme') || 'dark');
   const [modules, setModules] = useState([]);
   const [userData, setUserData] = useState({});
   const [xp, setXp] = useState(() => parseInt(localStorage.getItem('boucton_xp') || '0'));
@@ -27,6 +28,20 @@ const App = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    localStorage.setItem('boucton_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
 
   useEffect(() => {
     const loadModules = async () => {
