@@ -60,7 +60,7 @@ Ce projet est incrémental. Les contributions doivent :
 
 ## Licence & Traçabilité
 
-Ce projet est documenté à titre personnel et professionnel, avec une tracabilité complète dans les commits Git. 
+Ce projet est documenté à titre personnel et professionnel, avec une tracabilité complète dans les commits GitHub. 
 
 ---
 
