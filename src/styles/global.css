@@ -4,15 +4,14 @@
 
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #020617; /* Slate 950 profond */
+  background-color: #020617;
   color: #e2e8f0;
-  /* Fond subtil techno */
   background-image: 
     radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.03), transparent 25%),
     radial-gradient(circle at 85% 30%, rgba(244, 63, 94, 0.03), transparent 25%);
 }
 
-/* --- Effets Verre & Cartes --- */
+/* --- UI Elements --- */
 .glass {
   background: rgba(15, 23, 42, 0.7);
   backdrop-filter: blur(12px);
@@ -50,33 +49,20 @@ body {
 .animate-fade {
   animation: fadeIn 0.5s ease-out forwards;
 }
-
 .animate-blob {
   animation: blob 7s infinite;
 }
-
 .animation-delay-2000 {
   animation-delay: 2s;
 }
 
-/* --- Scrollbars stylisées (Fines et discrètes) --- */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.5);
-}
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(51, 65, 85, 0.5);
-  border-radius: 10px;
-}
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(71, 85, 105, 0.8);
-}
+/* --- Scrollbar --- */
+.custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.5); }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(51, 65, 85, 0.5); border-radius: 10px; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(71, 85, 105, 0.8); }
 
-/* --- TYPOGRAPHIE MARKDOWN (Le Glow-Up du Texte) --- */
-/* Ces classes s'appliquent automatiquement au contenu des fichiers .md */
+/* --- MARKDOWN STYLING (CORRIGÉ POUR LES TABLEAUX) --- */
 
 .markdown-content {
   @apply text-slate-300 leading-relaxed text-lg;
@@ -84,20 +70,14 @@ body {
 
 /* Titres */
 .markdown-content h1 {
-  @apply text-4xl font-black text-white mb-8 mt-10 pb-4 border-b border-white/10 tracking-tight;
+  @apply text-4xl font-black text-white mb-8 mt-4 pb-4 border-b border-white/10 tracking-tight;
   background: linear-gradient(to right, #fff, #94a3b8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-
 .markdown-content h2 {
-  @apply text-2xl font-bold text-white mb-6 mt-12 flex items-center;
+  @apply text-2xl font-bold text-white mb-6 mt-12 flex items-center border-l-4 border-blue-500 pl-4 bg-gradient-to-r from-blue-500/10 to-transparent py-2 rounded-r-lg;
 }
-.markdown-content h2::before {
-  content: '#';
-  @apply text-blue-500 mr-2 text-xl opacity-50 font-normal;
-}
-
 .markdown-content h3 {
   @apply text-xl font-semibold text-blue-200 mb-4 mt-8;
 }
@@ -109,52 +89,63 @@ body {
 .markdown-content ol {
   @apply list-decimal list-outside ml-6 mb-6 space-y-2 marker:text-slate-500;
 }
-
-/* Citations & Mises en avant */
-.markdown-content blockquote {
-  @apply border-l-4 border-blue-500 bg-slate-800/30 py-4 px-6 rounded-r-xl italic text-slate-300 my-8 shadow-sm;
+.markdown-content li {
+  @apply pl-2;
 }
 
-/* Code */
+/* Tableaux (LE FIX EST ICI) */
+.markdown-content table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 2rem 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.markdown-content thead {
+  background-color: rgba(30, 41, 59, 0.8); /* Slate 800 */
+}
+
+.markdown-content th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid rgba(59, 130, 246, 0.5); /* Ligne bleue sous l'entête */
+}
+
+.markdown-content td {
+  padding: 1rem;
+  color: #cbd5e1; /* Slate 300 */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background-color: rgba(15, 23, 42, 0.4); /* Slate 950 transparent */
+}
+
+.markdown-content tr:last-child td {
+  border-bottom: none;
+}
+
+.markdown-content tr:hover td {
+  background-color: rgba(59, 130, 246, 0.1); /* Hover bleu léger */
+  transition: background-color 0.2s;
+}
+
+/* Citations & Code */
+.markdown-content blockquote {
+  @apply border-l-4 border-amber-500 bg-amber-500/10 py-4 px-6 rounded-r-xl italic text-amber-100 my-8;
+}
 .markdown-content code {
   @apply bg-slate-800 text-blue-300 px-1.5 py-0.5 rounded text-sm font-mono border border-white/5;
 }
 .markdown-content pre {
-  @apply bg-slate-950 p-5 rounded-xl overflow-x-auto border border-white/10 mb-8 shadow-inner mt-4;
+  @apply bg-slate-950 p-5 rounded-xl overflow-x-auto border border-white/10 mb-8 mt-4 shadow-inner;
 }
-.markdown-content pre code {
-  @apply bg-transparent p-0 text-slate-300 border-none;
-}
-
-/* Tableaux (Crucial pour le médical) */
-.markdown-content table {
-  @apply w-full text-left border-collapse my-8 rounded-xl overflow-hidden shadow-lg;
-}
-.markdown-content thead {
-  @apply bg-slate-800 text-white;
-}
-.markdown-content th {
-  @apply p-4 font-semibold text-sm uppercase tracking-wider border-b border-white/10 text-blue-100;
-}
-.markdown-content td {
-  @apply p-4 border-b border-white/5 text-slate-400 text-sm;
-}
-.markdown-content tr:last-child td {
-  @apply border-b-0;
-}
-.markdown-content tr:hover td {
-  @apply bg-white/5 text-white transition-colors;
-}
-
-/* Liens */
 .markdown-content a {
-  @apply text-blue-400 no-underline border-b border-blue-500/30 transition-all pb-0.5;
-}
-.markdown-content a:hover {
-  @apply text-blue-300 border-blue-400;
-}
-
-/* Séparateurs */
-.markdown-content hr {
-  @apply border-white/10 my-12;
+  @apply text-blue-400 no-underline border-b border-blue-500/30 transition-all pb-0.5 hover:text-blue-300 hover:border-blue-400;
 }
