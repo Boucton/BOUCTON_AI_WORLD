@@ -62,10 +62,11 @@ const App = () => {
          setMysteryUnlocked(true);
      }
   };
-
+// Si on est sur la home
   if (view === 'home') {
     return (
       <Home 
+        modules={modules} // <--- C'EST ICI QU'ON PASSE LES DONNÉES
         onStart={handleStart} 
         onNavigate={handleNavigateToModule} 
       />
