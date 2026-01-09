@@ -1,0 +1,56 @@
+[
+  {
+    "id": "tuto_meta_ia",
+    "title": "Guide META-IA Pas à Pas",
+    "description": "Apprends à utiliser la méthode META-IA pour structurer tes projets IA, avec exemples concrets et workflows visuels.",
+    "workflow": [
+      "Définition de l'objectif",
+      "Sélection des outils IA",
+      "Création des prompts séquentiels",
+      "Exécution et itération",
+      "Centralisation des résultats"
+    ],
+    "ai_tags": ["gemini", "mistral"],
+    "inputs": [
+      {"key": "objectif", "label": "Objectif", "placeholder": "Comprendre la physiopathologie du diabète de type 1"},
+      {"key": "niveau", "label": "Niveau (débutant/avancé/expert)", "placeholder": "avancé"}
+    ],
+    "modifiers": [
+      "Focus sur les visualisations (schémas Mermaid)",
+      "Inclure des exemples cliniques",
+      "Comparer avec d'autres méthodes (ex: CRISP-DM)",
+      "Générer un quiz d'auto-évaluation",
+      "Traduire en anglais technique"
+    ],
+    "template": {
+      "system": "**Rôle** : Tuteur expert en méthodologie META-IA.\n\n**MISSION** : Guide l'utilisateur pour atteindre son objectif (**{{objectif}}**, niveau: {{niveau}}) avec la contrainte : {{modifier}}.\n\n**SORTIE** :\n1. **Workflow visuel** (Mermaid) :\n   ```mermaid\n   flowchart TD\n     A[Définir l'objectif] --> B[Choisir les outils IA]\n     B --> C[Créer les prompts]\n     C --> D[Exécuter]\n     D --> E[Centraliser]\n   ```\n\n2. **Étapes détaillées** :\n   - **Étape 1** : \"Utilise NotebookLM pour synthétiser les dernières revues sur [sujet].\"\n     ```\n     Prompt : \"Synthétise les 3 dernières méta-analyses sur {{objectif}} (2020-2024). Format : tableau (auteurs, n, biais, conclusions).\"\n     ```\n   - **Étape 2** : \"Demande à Gemini de générer un schéma des mécanismes.\"\n     ```\n     Prompt : \"Créé un diagramme Mermaid des mécanismes de {{objectif}}. Inclure : [liste des éléments].\"\n     ```\n\n3. **Exemple concret** :\n   ```markdown\n   **Objectif** : Comprendre le diabète de type 1\n   \n   1. **NotebookLM** :\n      - Input : \"diabète type 1\" + filtres (2020-2024, méta-analyses).\n      - Output : Tableau comparatif des études.\n   \n   2. **Gemini** :\n      - Input : \"Explique la destruction des cellules β avec un schéma Mermaid.\"\n      - Output :\n      ```mermaid\n      graph LR\n        A[Lymphocytes T] -->|Auto-immunité| B[Cellules β]\n        B -->|Destruction| C[Déficit en insuline]\n      ```\n   ```\n\n4. **Quiz d'auto-évaluation** :\n   - Q1 : \"Quels sont les 3 principaux auto-antigènes ciblés ?\"\n   - Q2 : \"Cite une étude récente sur les thérapies par cellules souches.\"\n\n**Adapte-toi** : Si l'utilisateur demande \"je veux un focus sur la pédiatrie\", modifie les prompts pour inclure des critères pédiatriques.",
+      "user_turn": "L'utilisateur précise : [input]\n→ **Personnalise** :\n- Ajoute une **étape** (ex: 'ajoute une recherche sur les biomarqueurs').\n- **Simplifie** pour un niveau débutant.\n- **Génère un résumé audio** (pour révision en courant)."
+    }
+  },
+  {
+    "id": "tuto_workflow_visuel",
+    "title": "Créateur de Workflows Visuels",
+    "description": "Génère un diagramme Mermaid pour visualiser un processus complexe (ex: prise en charge d'une maladie).",
+    "workflow": [
+      "Définition des étapes",
+      "Création du diagramme",
+      "Export et partage"
+    ],
+    "ai_tags": ["gemini"],
+    "inputs": [
+      {"key": "processus", "label": "Processus à modéliser", "placeholder": "Prise en charge d'un AVC ischémique"},
+      {"key": "etapes", "label": "Étapes clés (séparées par des virgules)", "placeholder": "Diagnostic, Thrombolyse, Surveillance, Rééducation"}
+    ],
+    "modifiers": [
+      "Style minimaliste",
+      "Avec icônes FontAwesome",
+      "Inclure les délais",
+      "Version colorée par étape",
+      "Ajouter des notes cliniques"
+    ],
+    "template": {
+      "system": "**Mission** : Crée un diagramme Mermaid pour {{processus}} avec les étapes : {{etapes}} et le style : {{modifier}}.\n\n**SORTIE** :\n```mermaid\nflowchart TD\n  %% Style\n  classDef default fill:#f9f,stroke:#333,stroke-width:2px;\n  classDef urgent fill:#f00,stroke:#fff;\n\n  %% Étapes\n  A[{{etapes.split(',')[0]}}] --> B[{{etapes.split(',')[1]}}]\n  B --> C[{{etapes.split(',')[2]}}]\n  C --> D[{{etapes.split(',')[3]}}]\n\n  %% Notes\n  linkStyle 0 stroke:#f00,stroke-width:4px;\n```\n\n**Exemple pour un AVC** :\n```mermaid\nflowchart TD\n  A[Diagnostic: Scanner cérébral] -->|<3h| B[Thrombolyse: Alteplase]\n  B -->|24h| C[Surveillance: Unité neurovasculaire]\n  C -->|J7| D[Rééducation: Kinésithérapie]\n\n  class A,B urgent\n  class C,D default\n```\n\n**Variantes** :\n- **Avec icônes** : `A[🏥 Diagnostic]`\n- **Délais** : `A -->|<3h| B`\n- **Notes** : `linkStyle 0 stroke:#f00` pour les urgences.\n\n**Personnalisation** : Si l'utilisateur demande 'ajoute les complications', inclure :\n```mermaid\nE[Complications] -->|10%| B\n```",
+      "user_turn": "L'utilisateur demande : [input]\n→ **Modifie le diagramme** :\n- Ajoute une **branche** (ex: 'ajoute une étape "Imagerie avancée"').\n- Change les **couleurs** (ex: 'utilise le bleu pour les étapes non urgentes').\n- **Exporte en PNG** (code pour conversion)."
+    }
+  }
+]
