@@ -8,7 +8,6 @@ const PromptCard = ({ prompt, moduleId, isActive, setActivePrompt }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const theme = THEMES[prompt.color || 'rose'];
 
-  // Chargement état favori
   useEffect(() => {
     const favs = JSON.parse(localStorage.getItem('boucton_favs') || '[]');
     setIsFavorite(favs.includes(prompt.id));
@@ -46,6 +45,24 @@ const PromptCard = ({ prompt, moduleId, isActive, setActivePrompt }) => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // NOUVEAU : Génération de liens directs vers les IA
+  const openInAI = (aiType) => {
+    const encodedPrompt = encodeURIComponent(finalPrompt);
+    const urls = {
+      gemini: `https://gemini.google.com/app?q=${encodedPrompt}`,
+      mistral: `https://chat.mistral.ai/chat?q=${encodedPrompt}`,
+      chatgpt: `https://chat.openai.com/?q=${encodedPrompt}`,
+      claude: `https://claude.ai/new?q=${encodedPrompt}`
+    };
+    
+    window.open(urls[aiType], '_blank', 'noopener,noreferrer');
+    
+    // Feedback visuel
+    window.dispatchEvent(new CustomEvent('show-toast', { 
+      detail: `Prompt envoyé vers ${aiType.toUpperCase()} 🚀` 
+    }));
+  };
+
   return (
     <div 
       onClick={() => setActivePrompt(isActive ? null : prompt.id)}
@@ -71,7 +88,7 @@ const PromptCard = ({ prompt, moduleId, isActive, setActivePrompt }) => {
       </div>
 
       {/* Contenu Dépliable */}
-      <div className={`overflow-hidden transition-all duration-300 ${isActive ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
+      <div className={`overflow-hidden transition-all duration-300 ${isActive ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0'}`}>
         <div className="p-5 pt-0 border-t border-white/5 space-y-4">
           
           <div className="grid gap-3 bg-slate-950/50 p-4 rounded-xl border border-white/5">
@@ -96,13 +113,50 @@ const PromptCard = ({ prompt, moduleId, isActive, setActivePrompt }) => {
              {modifier && <span className="text-xs text-amber-300 py-2 flex-1 truncate text-right animate-pulse">{modifier}</span>}
           </div>
 
+          {/* Zone de Prompt */}
           <div className="relative">
-            <pre className="bg-black/50 p-4 rounded-xl text-xs text-slate-300 font-mono whitespace-pre-wrap border border-white/10">
+            <pre className="bg-black/50 p-4 rounded-xl text-xs text-slate-300 font-mono whitespace-pre-wrap border border-white/10 max-h-64 overflow-y-auto custom-scrollbar">
               {finalPrompt}
             </pre>
             <button onClick={handleCopy} className={`absolute top-2 right-2 px-3 py-1 rounded-md text-xs font-bold transition-all flex items-center gap-2 ${copied ? 'bg-green-500 text-white' : 'bg-white text-black hover:bg-blue-400 hover:text-white'}`}>
               <i className={`fas ${copied ? 'fa-check' : 'fa-copy'}`}></i> {copied ? 'Copié' : 'Copier'}
             </button>
+          </div>
+
+          {/* NOUVEAU : Boutons d'envoi direct vers IA */}
+          <div className="bg-slate-950/50 p-3 rounded-xl border border-white/5">
+            <div className="text-[10px] uppercase font-bold text-slate-500 mb-2 tracking-wider">
+              Ouvrir dans :
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <button 
+                onClick={(e) => { e.stopPropagation(); openInAI('gemini'); }}
+                className="py-2 px-3 bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 text-white text-xs font-bold rounded-lg transition flex items-center justify-center gap-2"
+              >
+                <i className="fas fa-sparkles"></i> Gemini
+              </button>
+              <button 
+                onClick={(e) => { e.stopPropagation(); openInAI('mistral'); }}
+                className="py-2 px-3 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold rounded-lg transition flex items-center justify-center gap-2"
+              >
+                <span className="text-[10px]">🇫🇷</span> Mistral
+              </button>
+              <button 
+                onClick={(e) => { e.stopPropagation(); openInAI('chatgpt'); }}
+                className="py-2 px-3 bg-[#10a37f] hover:bg-[#0d8c6e] text-white text-xs font-bold rounded-lg transition flex items-center justify-center gap-2"
+              >
+                <i className="fas fa-comment"></i> ChatGPT
+              </button>
+              <button 
+                onClick={(e) => { e.stopPropagation(); openInAI('claude'); }}
+                className="py-2 px-3 bg-[#d97757] hover:bg-[#c76647] text-white text-xs font-bold rounded-lg transition flex items-center justify-center gap-2"
+              >
+                <i className="fas fa-brain"></i> Claude
+              </button>
+            </div>
+            <p className="text-[10px] text-slate-500 mt-2 italic">
+              Le prompt sera pré-rempli dans une nouvelle fenêtre
+            </p>
           </div>
         </div>
       </div>
