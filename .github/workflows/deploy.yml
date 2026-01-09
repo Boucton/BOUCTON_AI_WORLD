@@ -1,0 +1,27 @@
+name: Deploy BOUCTON_AI_WORLD to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]  # Se déclenche quand tu pushes sur la branche main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build with Vite
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v2
+        with:
+          artifact_name: "dist"
