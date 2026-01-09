@@ -15,6 +15,8 @@ import NeuralBackground from './components/NeuralBackground';
 import Achievements from './components/Achievements';
 import FocusTimer from './components/FocusTimer';
 import Settings from './components/Settings';
+// NOUVEAUX IMPORTS V3
+import WorkflowEngine from './components/WorkflowEngine';
 
 const App = () => {
   const [theme, setTheme] = useState(() => localStorage.getItem('boucton_theme') || 'dark');
@@ -121,7 +123,7 @@ const App = () => {
       <Route path="/achievements" element={<MainLayout><Achievements xp={xp} level={getLevel(xp)} /></MainLayout>} />
       <Route path="/timer" element={<MainLayout><FocusTimer /></MainLayout>} />
       <Route path="/settings" element={<MainLayout><Settings /></MainLayout>} />
-      
+      <Route path="/workflow" element={<MainLayout><WorkflowEngine /></MainLayout>} />
       <Route path="/module/:moduleId" element={<MainLayout><ModuleView allModules={modules} userData={userData} setUserData={setUserData} addXp={addXp} /></MainLayout>} />
     </Routes>
   );
