@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-const SecretLibrary = ({ xp }) => {
+const SecretLibrary = ({ xp, isOpen, onClose }) => {
   const [isUnlocked, setIsUnlocked] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const requiredXP = 500; // XP nécessaire pour débloquer
+  const requiredXP = 500;
 
   useEffect(() => {
     setIsUnlocked(xp >= requiredXP);
   }, [xp]);
-
-  if (!isUnlocked) return null;
 
   const secrets = [
     {
@@ -36,7 +33,7 @@ Ce poème de Paul Valéry (1920) explore la méditation face à la mer et à la 
     },
     {
       id: 'quantum_physics',
-      title: 'Mécanique Quantique pour Débutants',
+      title: 'Mécanique Quantique Simplifiée',
       description: 'Principes de superposition et intrication expliqués simplement.',
       icon: 'fa-atom',
       color: 'from-cyan-600 to-blue-600',
@@ -62,7 +59,7 @@ Deux particules "intriquées" restent connectées même à des années-lumière 
     {
       id: 'cognitive_biases',
       title: 'Biais Cognitifs en Médecine',
-      description: 'Les erreurs de raisonnement qui tuent (littéralement).',
+      description: 'Les erreurs de raisonnement qui peuvent être fatales.',
       icon: 'fa-brain',
       color: 'from-red-600 to-orange-600',
       content: `# Biais Cognitifs à Connaître
@@ -75,7 +72,7 @@ Donner trop de poids à la première information reçue.
 ## 2. Biais de Confirmation
 Chercher des preuves qui confirment notre hypothèse et ignorer le reste.
 
-**Exemple** : "Je pense que c'est une grippe" → On ne demande pas d'exams qui pourraient montrer une pneumonie.
+**Exemple** : "Je pense que c'est une grippe" → On ne demande pas d'examens qui pourraient montrer une pneumonie.
 
 ## 3. Biais de Disponibilité
 Surestimer la probabilité d'événements récents/marquants.
@@ -86,21 +83,39 @@ Surestimer la probabilité d'événements récents/marquants.
     }
   ];
 
+  if (!isUnlocked) {
+    return (
+      <div className="fixed bottom-24 right-24 z-[55] bg-slate-900/90 backdrop-blur-xl border border-amber-500/30 rounded-xl p-4 max-w-xs shadow-2xl">
+        <div className="flex items-start gap-3">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-600 to-pink-600 flex items-center justify-center shrink-0">
+            <i className="fas fa-lock text-white"></i>
+          </div>
+          <div>
+            <div className="font-bold text-white text-sm mb-1">Bibliothèque Secrète</div>
+            <div className="text-xs text-slate-400 mb-2">
+              Débloquée à {requiredXP} XP
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-r from-purple-600 to-pink-600 transition-all duration-500"
+                  style={{ width: `${Math.min((xp / requiredXP) * 100, 100)}%` }}
+                ></div>
+              </div>
+              <span className="text-[10px] text-slate-500 font-mono">{xp}/{requiredXP}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
-      {/* Bouton Déclencheur */}
-      <button
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-24 right-6 z-50 w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-full flex items-center justify-center text-white shadow-lg hover:scale-110 transition-transform animate-pulse"
-        title="Bibliothèque Secrète Débloquée !"
-      >
-        <i className="fas fa-vault text-xl"></i>
-      </button>
-
       {/* Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm animate-fade">
-          <div className="bg-slate-900 border border-purple-500/30 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+          <div className="bg-slate-900 border border-purple-500/30 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden shadow-2xl m-4">
             
             {/* Header */}
             <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-6 relative overflow-hidden">
@@ -112,14 +127,17 @@ Surestimer la probabilité d'événements récents/marquants.
               </div>
               <div className="relative flex justify-between items-start">
                 <div>
-                  <h2 className="text-3xl font-black text-white mb-2">📚 Bibliothèque Cachée</h2>
+                  <h2 className="text-3xl font-black text-white mb-2 flex items-center gap-3">
+                    <i className="fas fa-book-sparkles"></i>
+                    Bibliothèque Cachée
+                  </h2>
                   <p className="text-purple-100 text-sm">
                     Débloquée avec {requiredXP} XP • Contenu exclusif
                   </p>
                 </div>
                 <button 
-                  onClick={() => setIsOpen(false)}
-                  className="w-8 h-8 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center text-white transition"
+                  onClick={onClose}
+                  className="w-10 h-10 bg-white/20 hover:bg-white/30 rounded-lg flex items-center justify-center text-white transition"
                 >
                   <i className="fas fa-times"></i>
                 </button>
@@ -127,16 +145,18 @@ Surestimer la probabilité d'événements récents/marquants.
             </div>
 
             {/* Content */}
-            <div className="p-6 overflow-y-auto max-h-[calc(90vh-120px)] custom-scrollbar">
+            <div className="p-6 overflow-y-auto max-h-[calc(90vh-140px)] custom-scrollbar">
+              
+              {/* Grille de cartes */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 {secrets.map(secret => (
                   <div key={secret.id} className="group">
-                    <div className={`bg-gradient-to-br ${secret.color} p-4 rounded-xl cursor-pointer hover:scale-105 transition-transform`}>
+                    <div className={`bg-gradient-to-br ${secret.color} p-4 rounded-xl cursor-pointer hover:scale-105 transition-transform shadow-lg`}>
                       <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center mb-3">
                         <i className={`fas ${secret.icon} text-2xl text-white`}></i>
                       </div>
-                      <h3 className="font-bold text-white mb-1">{secret.title}</h3>
-                      <p className="text-xs text-white/80">{secret.description}</p>
+                      <h3 className="font-bold text-white mb-1 text-sm">{secret.title}</h3>
+                      <p className="text-xs text-white/80 line-clamp-2">{secret.description}</p>
                     </div>
                   </div>
                 ))}
@@ -144,13 +164,16 @@ Surestimer la probabilité d'événements récents/marquants.
 
               {/* Contenu détaillé */}
               {secrets.map(secret => (
-                <details key={`detail-${secret.id}`} className="mb-4 bg-slate-950/50 rounded-xl border border-white/10 overflow-hidden">
-                  <summary className="p-4 cursor-pointer hover:bg-slate-800 transition font-bold text-white flex items-center gap-2">
-                    <i className={`fas ${secret.icon} text-purple-400`}></i>
+                <details key={`detail-${secret.id}`} className="mb-4 bg-slate-950/50 rounded-xl border border-white/10 overflow-hidden group">
+                  <summary className="p-4 cursor-pointer hover:bg-slate-800 transition font-bold text-white flex items-center gap-3">
+                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${secret.color} flex items-center justify-center`}>
+                      <i className={`fas ${secret.icon} text-sm text-white`}></i>
+                    </div>
                     {secret.title}
+                    <i className="fas fa-chevron-down text-xs text-slate-500 ml-auto group-open:rotate-180 transition-transform"></i>
                   </summary>
-                  <div className="p-6 prose prose-invert max-w-none">
-                    <div className="text-slate-300 text-sm leading-relaxed whitespace-pre-line">
+                  <div className="p-6 border-t border-white/10">
+                    <div className="prose prose-invert max-w-none text-slate-300 text-sm leading-relaxed whitespace-pre-line">
                       {secret.content}
                     </div>
                   </div>
@@ -160,8 +183,11 @@ Surestimer la probabilité d'événements récents/marquants.
               {/* Footer */}
               <div className="mt-6 bg-purple-500/10 border border-purple-500/30 rounded-xl p-4 text-center">
                 <i className="fas fa-trophy text-purple-400 text-2xl mb-2"></i>
-                <p className="text-sm text-purple-300">
-                  Continuez à accumuler de l'XP pour débloquer encore plus de contenu !
+                <p className="text-sm text-purple-300 font-bold mb-1">
+                  Félicitations pour avoir débloqué cette section !
+                </p>
+                <p className="text-xs text-slate-400">
+                  Continuez à accumuler de l'XP pour débloquer encore plus de contenu exclusif.
                 </p>
               </div>
             </div>
