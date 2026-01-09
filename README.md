@@ -23,7 +23,7 @@ Les intelligences artificielles ne sont pas des « boîtes noires mystérieuses 
 
 ## Rôle du projet
 
-BOUCTON_AI_WORLD serve de référence personnelle et collective pour : 
+BOUCTON_AI_WORLD comme référence personnelle et collective pour : 
 
 ✅ Apprendre comment utiliser efficacement les IA  
 ✅ Documenter des workflows éprouvés  
