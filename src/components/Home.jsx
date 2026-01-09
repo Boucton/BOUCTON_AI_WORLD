@@ -1,7 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 // On ajoute 'onNavigate' dans les props
 const Home = ({ onStart, onNavigate }) => {
+
+  const [text, setText] = useState('');
+const fullText = "BOUCTON_AI_WORLD";
+
+useEffect(() => {
+  let index = 0;
+  const interval = setInterval(() => {
+    setText(fullText.substring(0, index));
+    index++;
+    if (index > fullText.length) clearInterval(interval);
+  }, 100); // Vitesse de frappe
+  return () => clearInterval(interval);
+}, []);
   
   // Fonction utilitaire pour les cartes
   const ModuleCard = ({ title, id, color }) => (
@@ -23,7 +36,9 @@ const Home = ({ onStart, onNavigate }) => {
        </div>
 
       <div className="z-10 max-w-4xl mx-auto">
-        <h1 className="text-6xl md:text-7xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-white">
+        <h1 className="text-5xl md:text-7xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-white font-mono">
+  {text}<span className="animate-pulse">_</span>
+</h1>
           BOUCTON AI
         </h1>
         <p className="text-2xl text-slate-300 mb-10 font-light">
