@@ -4,16 +4,17 @@ import Sidebar from './components/Sidebar';
 import ModuleView from './components/ModuleView';
 import Dashboard from './components/Dashboard';
 import Header from './components/Header';
-import '../styles/global.css'; // On va créer ce fichier après
+import Home from './components/Home'; // On importe le nouveau fichier
+import '../styles/global.css';
 
 const App = () => {
   const [modules, setModules] = useState([]);
-  const [activeModule, setActiveModule] = useState('dr_gourmand');
-  const [view, setView] = useState('dashboard');
+  const [activeModule, setActiveModule] = useState(null); // Null au début
+  const [view, setView] = useState('home'); // On commence par 'home'
   const [mysteryUnlocked, setMysteryUnlocked] = useState(false);
   const [userData, setUserData] = useState({});
 
-  // Charge les données des modules au démarrage
+  // Chargement des données
   useEffect(() => {
     const loadModules = async () => {
       const loadedModules = await Promise.all(
@@ -23,8 +24,8 @@ const App = () => {
             const prompts = await import(`../${module.prompts_file}`);
             return { ...module, content: content.default, prompts: prompts.default };
           } catch (error) {
-            console.error(`Erreur chargement module ${module.id}:`, error);
-            return module; // Retourne le module même sans données
+            console.error(`Erreur module ${module.id}:`, error);
+            return module;
           }
         })
       );
@@ -32,6 +33,10 @@ const App = () => {
     };
     loadModules();
   }, []);
+
+  const handleStart = () => {
+    setView('dashboard');
+  };
 
   const handleMysteryTrigger = () => {
     if (!mysteryUnlocked) {
@@ -43,10 +48,16 @@ const App = () => {
     }
   };
 
+  // Si on est sur la Home, on affiche juste ça
+  if (view === 'home') {
+    return <Home onStart={handleStart} />;
+  }
+
+  // Sinon on affiche l'application complète
   return (
-    <div className="flex flex-col h-screen bg-slate-950 text-slate-200">
+    <div className="flex flex-col h-screen bg-slate-950 text-slate-200 overflow-hidden">
       <Header />
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden relative">
         <Sidebar
           modules={modules}
           activeModule={activeModule}
@@ -55,15 +66,17 @@ const App = () => {
           mysteryUnlocked={mysteryUnlocked}
           onMysteryTrigger={handleMysteryTrigger}
         />
-        {view === 'dashboard' ? (
-          <Dashboard modules={modules} setView={setView} setActiveModule={setActiveModule} />
-        ) : (
-          <ModuleView
-            module={modules.find(m => m.id === activeModule)}
-            userData={userData}
-            setUserData={setUserData}
-          />
-        )}
+        <main className="flex-1 overflow-hidden relative ml-72"> {/* Marge gauche pour la sidebar */}
+          {view === 'dashboard' ? (
+            <Dashboard modules={modules} setView={setView} setActiveModule={setActiveModule} />
+          ) : (
+            <ModuleView
+              module={modules.find(m => m.id === activeModule)}
+              userData={userData}
+              setUserData={setUserData}
+            />
+          )}
+        </main>
       </div>
     </div>
   );
