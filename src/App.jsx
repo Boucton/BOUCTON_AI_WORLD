@@ -183,6 +183,8 @@ const App = () => {
       <Route path="/timer" element={<MainLayout><FocusTimer /></MainLayout>} />
       <Route path="/settings" element={<MainLayout><Settings /></MainLayout>} />
       <Route path="/workflow" element={<MainLayout><WorkflowEngine /></MainLayout>} />
+      <Route path="/" element={<Home modules={modules || []} onStart={() => { addXp(10); navigate('/dashboard'); }} />} />
+      <Route path="/dashboard" element={<MainLayout><Dashboard modules={modules || []} /></MainLayout>} />
 
       {/* Vue Module Dynamique */}
       <Route path="/module/:moduleId" element={<MainLayout><ModuleView allModules={modules} userData={userData} setUserData={setUserData} addXp={addXp} /></MainLayout>} />
