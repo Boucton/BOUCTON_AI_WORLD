@@ -52,3 +52,25 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+/* Secours pour les tableaux Markdown */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+th {
+  background: rgba(30, 41, 59, 0.8);
+  padding: 12px;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #60a5fa; /* Blue 400 */
+}
+td {
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+}
+tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
