@@ -3,51 +3,165 @@
 @tailwind utilities;
 
 :root {
-  /* Couleur dynamique par défaut (Bleu) */
-  --accent-color: 59, 130, 246; 
+  --accent-color: 59, 130, 246;
 }
 
+/* MODE SOMBRE (par défaut) */
 body {
   font-family: 'Inter', system-ui, sans-serif;
   background-color: #020617;
   color: #f8fafc;
-  /* Le fond utilise maintenant la variable --accent-color pour la teinte */
   background-image: 
     radial-gradient(circle at 50% 0%, rgba(var(--accent-color), 0.15), transparent 50%),
     linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 100% 100%, 40px 40px, 40px 40px;
-  transition: background-image 1s ease; /* Transition douce des couleurs */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- Notifications (Toasts) --- */
+/* MODE CLAIR */
+.light body {
+  background-color: #f8fafc;
+  color: #0f172a;
+  background-image: 
+    radial-gradient(circle at 50% 0%, rgba(var(--accent-color), 0.08), transparent 50%),
+    linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+}
+
+.light .bg-slate-950 { background-color: #ffffff; }
+.light .bg-slate-900 { background-color: #f1f5f9; }
+.light .bg-slate-800 { background-color: #e2e8f0; }
+.light .text-white { color: #0f172a; }
+.light .text-slate-200 { color: #334155; }
+.light .text-slate-300 { color: #475569; }
+.light .text-slate-400 { color: #64748b; }
+.light .text-slate-500 { color: #94a3b8; }
+.light .border-white\/10 { border-color: rgba(15, 23, 42, 0.1); }
+.light .border-white\/5 { border-color: rgba(15, 23, 42, 0.05); }
+
+/* Notifications */
 .toast-enter { transform: translateX(100%); opacity: 0; }
 .toast-enter-active { transform: translateX(0); opacity: 1; transition: all 300ms ease-out; }
 .toast-exit { transform: translateX(0); opacity: 1; }
 .toast-exit-active { transform: translateX(100%); opacity: 0; transition: all 300ms ease-in; }
 
-/* ... (Garde le reste de ton CSS pour les tables, markdown, etc. que nous avons fait avant) ... */
-/* Je te remets les essentiels ici pour être sûr que tu ne perdes rien */
-
+/* Glass Card */
 .glass-card {
   background: rgba(30, 41, 59, 0.4);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.light .glass-card {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+}
+
+/* Scrollbar */
 .custom-scrollbar::-webkit-scrollbar { width: 6px; }
 .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
-.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(var(--accent-color), 0.8); }
+.custom-scrollbar::-webkit-scrollbar-thumb { 
+  background: #334155; 
+  border-radius: 10px; 
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { 
+  background: rgba(var(--accent-color), 0.8); 
+}
 
-/* Markdown Styles (Rappel des styles critiques) */
-.markdown-content { @apply text-slate-300 font-light tracking-wide; line-height: 1.9; }
+.light .custom-scrollbar::-webkit-scrollbar-thumb { 
+  background: #cbd5e1; 
+}
+
+/* Markdown Styles */
+.markdown-content { 
+  @apply text-slate-300 font-light tracking-wide; 
+  line-height: 1.9; 
+}
+
+.light .markdown-content { @apply text-slate-700; }
+
 .markdown-content h1 { display: none; }
-.markdown-content h2 { @apply text-2xl md:text-3xl font-bold text-white mt-16 mb-8 flex items-center relative; padding-bottom: 0.75rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-.markdown-content h2::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 60px; height: 3px; background: rgb(var(--accent-color)); box-shadow: 0 0 10px rgba(var(--accent-color), 0.6); }
-.markdown-content h3 { @apply text-xl font-semibold mt-12 mb-4 flex items-center; color: rgb(var(--accent-color)); }
-.markdown-content table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 3rem 0; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+
+.markdown-content h2 { 
+  @apply text-2xl md:text-3xl font-bold text-white mt-16 mb-8 flex items-center relative; 
+  padding-bottom: 0.75rem; 
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+}
+
+.light .markdown-content h2 { 
+  @apply text-slate-900; 
+  border-bottom-color: rgba(15, 23, 42, 0.1); 
+}
+
+.markdown-content h2::after { 
+  content: ''; 
+  position: absolute; 
+  bottom: -1px; 
+  left: 0; 
+  width: 60px; 
+  height: 3px; 
+  background: rgb(var(--accent-color)); 
+  box-shadow: 0 0 10px rgba(var(--accent-color), 0.6); 
+}
+
+.markdown-content h3 { 
+  @apply text-xl font-semibold mt-12 mb-4 flex items-center; 
+  color: rgb(var(--accent-color)); 
+}
+
+.markdown-content table { 
+  width: 100%; 
+  border-collapse: separate; 
+  border-spacing: 0; 
+  margin: 3rem 0; 
+  border-radius: 16px; 
+  overflow: hidden; 
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); 
+}
+
+.light .markdown-content table { 
+  border-color: rgba(15, 23, 42, 0.1); 
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1); 
+}
+
 .markdown-content thead { background: #1e293b; }
-.markdown-content th { padding: 20px 24px; text-align: left; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; font-weight: 800; color: rgb(var(--accent-color)); border-bottom: 2px solid #334155; }
-.markdown-content td { padding: 20px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); background: rgba(30, 41, 59, 0.3); vertical-align: top; }
-.markdown-content blockquote { border-left: 4px solid rgb(var(--accent-color)); background: rgba(var(--accent-color), 0.1); padding: 1.5rem 2rem; border-radius: 0 1rem 1rem 0; font-style: italic; color: #e2e8f0; margin: 2.5rem 0; }
+.light .markdown-content thead { background: #e2e8f0; }
+
+.markdown-content th { 
+  padding: 20px 24px; 
+  text-align: left; 
+  font-size: 0.75rem; 
+  text-transform: uppercase; 
+  letter-spacing: 0.15em; 
+  font-weight: 800; 
+  color: rgb(var(--accent-color)); 
+  border-bottom: 2px solid #334155; 
+}
+
+.light .markdown-content th { border-bottom-color: #cbd5e1; }
+
+.markdown-content td { 
+  padding: 20px 24px; 
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05); 
+  background: rgba(30, 41, 59, 0.3); 
+  vertical-align: top; 
+}
+
+.light .markdown-content td { 
+  background: rgba(255, 255, 255, 0.5); 
+  border-bottom-color: rgba(15, 23, 42, 0.05); 
+}
+
+.markdown-content blockquote { 
+  border-left: 4px solid rgb(var(--accent-color)); 
+  background: rgba(var(--accent-color), 0.1); 
+  padding: 1.5rem 2rem; 
+  border-radius: 0 1rem 1rem 0; 
+  font-style: italic; 
+  color: #e2e8f0; 
+  margin: 2.5rem 0; 
+}
+
+.light .markdown-content blockquote { color: #334155; }
