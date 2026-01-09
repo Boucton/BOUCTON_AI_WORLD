@@ -75,6 +75,9 @@ const [showScroll, setShowScroll] = useState(false);
                 .prose th { @apply bg-slate-800 text-white font-semibold p-3 border border-slate-700; }
                 .prose td { @apply p-3 border border-slate-700 text-slate-300; }
                 .prose tr:nth-child(even) { @apply bg-slate-800/30; }
+                /* On cible les liens dans le markdown */
+                .prose a { color: #60a5fa; text-decoration: none; border-bottom: 1px dotted #60a5fa; transition: all 0.2s; }
+                .prose a:hover { color: #93c5fd; border-bottom-style: solid; }
             `}</style>
 
             <div className="prose max-w-none">
