@@ -8,11 +8,8 @@ import ProgressBar from './ProgressBar';
 const ModuleView = ({ module, allModules, userData, setUserData, setActiveModule }) => {
   const [activePrompt, setActivePrompt] = useState(null);
   const [showScroll, setShowScroll] = useState(false);
-  
-  // --- NOUVEAU : Contrôle de la taille de police (Lecteur Zen) ---
-  const [fontSize, setFontSize] = useState(1); // 1 = normal, 1.1 = grand, 1.2 = très grand
+  const [fontSize, setFontSize] = useState(1);
 
-  // Configuration des composants Markdown (Réactive à fontSize)
   const MarkdownComponents = {
     h1: ({node, ...props}) => <h1 className="hidden" {...props} />,
     h2: ({node, ...props}) => (
@@ -54,24 +51,32 @@ const ModuleView = ({ module, allModules, userData, setUserData, setActiveModule
   };
 
   const handleScroll = (e) => setShowScroll(e.currentTarget.scrollTop > 300);
-  const scrollToTop = () => document.querySelector('.custom-scrollbar')?.scrollTo({ top: 0, behavior: 'smooth' });
+  const scrollToTop = () => document.querySelector('.module-scroll-container')?.scrollTo({ top: 0, behavior: 'smooth' });
 
   const copyForPodcast = () => {
-    const script = `CONTEXTE: Ceci est un contenu éducatif médical pour le projet BOUCTON_AI_WORLD.\nCONTENU À SYNTHÉTISER EN PODCAST:\n\n${module.content}`;
+    const script = `CONTEXTE: Ceci est un contenu éducatif pour le projet BOUCTON_AI_WORLD.\nCONTENU À SYNTHÉTISER:\n\n${module.content}`;
     navigator.clipboard.writeText(script);
-    // Ici on déclenche le Toast global via un event (ou juste alert pour l'instant)
-    window.dispatchEvent(new CustomEvent('show-toast', { detail: 'Script copié pour Podcast !' }));
+    window.dispatchEvent(new CustomEvent('show-toast', { detail: '📔 Script copié pour NotebookLM !' }));
   };
 
   const relatedModules = allModules?.filter(m => m.id !== module.id && m.tags?.some(t => module.tags?.includes(t))).slice(0, 3) || [];
 
-  if (!module) return <div className="p-20 text-center text-slate-500 animate-pulse">Chargement...</div>;
+  if (!module) return (
+    <div className="p-20 text-center text-slate-500">
+      <i className="fas fa-spinner fa-spin text-4xl mb-4"></i>
+      <p>Chargement du module...</p>
+    </div>
+  );
 
   return (
-    <div className="h-full overflow-y-auto bg-slate-950 custom-scrollbar scroll-smooth" onScroll={handleScroll}>
+    <div className="h-full overflow-y-auto bg-slate-950 custom-scrollbar scroll-smooth module-scroll-container" onScroll={handleScroll}>
+      
+      {/* Barre de progression FIXE */}
+      <ProgressBar moduleId={module.id} content={module.content} />
+
       <div className="max-w-5xl mx-auto p-6 md:p-12">
         
-        {/* Ariane + Contrôles Zen */}
+        {/* Contrôles Zen */}
         <div className="mb-8 flex justify-between items-end animate-fade">
            <div className="flex items-center gap-2 text-[10px] text-slate-500 uppercase tracking-widest font-bold">
               <i className="fas fa-circle text-[4px] text-blue-500"></i>
@@ -103,9 +108,7 @@ const ModuleView = ({ module, allModules, userData, setUserData, setActiveModule
                 </p>
              </div>
         </div>
-        
-        <ProgressBar moduleId={module.id} totalSections={10} />
-        
+
         {module.id === 'dr_gourmand' && <VitalMonitor />}
 
         {/* CONTENU TEXTUEL */}
@@ -118,25 +121,30 @@ const ModuleView = ({ module, allModules, userData, setUserData, setActiveModule
         </div>
 
         {/* Section Prompts */}
-        <div className="mt-24 pt-12 border-t border-white/10">
-            <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-                <span className="w-8 h-8 rounded bg-blue-600 flex items-center justify-center text-sm"><i className="fas fa-terminal"></i></span>
-                Prompts Disponibles
-            </h2>
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-              {module.prompts?.map((prompt) => (
-                  <PromptCard key={prompt.id} prompt={prompt} moduleId={module.id} 
-                    userData={userData} setUserData={setUserData} 
-                    isActive={activePrompt === prompt.id} setActivePrompt={setActivePrompt} 
-                  />
-              ))}
-            </div>
-        </div>
+        {module.prompts && module.prompts.length > 0 && (
+          <div className="mt-24 pt-12 border-t border-white/10">
+              <h2 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                  <span className="w-8 h-8 rounded bg-blue-600 flex items-center justify-center text-sm"><i className="fas fa-terminal"></i></span>
+                  Prompts Disponibles ({module.prompts.length})
+              </h2>
+              <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                {module.prompts.map((prompt) => (
+                    <PromptCard key={prompt.id} prompt={prompt} moduleId={module.id} 
+                      userData={userData} setUserData={setUserData} 
+                      isActive={activePrompt === prompt.id} setActivePrompt={setActivePrompt} 
+                    />
+                ))}
+              </div>
+          </div>
+        )}
 
         {/* Synapses */}
         {relatedModules.length > 0 && (
             <div className="mt-20 pt-10 border-t border-white/5">
-                <h3 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6">Connexions Neuronales</h3>
+                <h3 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-6 flex items-center gap-2">
+                  <i className="fas fa-project-diagram"></i>
+                  Connexions Neuronales
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {relatedModules.map(rm => (
                         <button key={rm.id} onClick={() => setActiveModule(rm.id)} className="text-left p-4 rounded-xl bg-slate-900 border border-white/5 hover:border-blue-500/50 hover:bg-slate-800 transition group">
@@ -149,7 +157,13 @@ const ModuleView = ({ module, allModules, userData, setUserData, setActiveModule
         )}
       </div>
 
-      <button onClick={scrollToTop} className={`fixed bottom-8 right-8 w-12 h-12 bg-white text-slate-900 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all z-50 ${showScroll ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+      {/* Bouton Scroll to Top */}
+      <button 
+        onClick={scrollToTop} 
+        className={`fixed bottom-8 right-8 w-12 h-12 bg-blue-600 hover:bg-blue-500 text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-all z-40 ${
+          showScroll ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+      >
         <i className="fas fa-arrow-up"></i>
       </button>
     </div>
