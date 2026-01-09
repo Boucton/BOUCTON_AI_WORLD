@@ -1,4 +1,6 @@
-# 📍 BOUCTON_AI_WORLD — Hub Central
+# 📍 BOUCTON_AI_WORLD 📍 
+
+## **Chères Gourmandes, Chers Gourmands** ##
 
 Bienvenue dans votre espace d'apprentissage et de maîtrise des intelligences artificielles !
 
@@ -65,7 +67,7 @@ Référentiel de connaissances médicales.
 |----------|--------|---------|
 | Documenter les workflows IA | ✅ | META_IA.md |
 | Créer une bibliothèque de prompts | ✅ | CODEX_IA.md |
-| Simulator médical intelligent | 🔄 | Dr_GOURMAND.md |
+| Simulateur médical intelligent | 🔄 | Dr_GOURMAND.md |
 | Structurer les connaissances | ✅ | BIBLIO_GOURMANDE.md |
 
 ---
