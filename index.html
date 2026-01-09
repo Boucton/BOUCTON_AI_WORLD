@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BOUCTON_AI_WORLD | Hub IA Médical & Pédagogique</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { --accent: #3b82f6; }
+    body { background: radial-gradient(circle at 15% 50%, rgba(56, 189, 248, 0.08), transparent 25%), radial-gradient(circle at 85% 30%, rgba(244, 63, 94, 0.08), transparent 25%); }
+    .glass { background: rgba(30, 41, 59, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen">
+  <!-- Barre de navigation -->
+  <nav class="glass p-4 fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <div class="flex items-center gap-3">
+        <i class="fas fa-brain text-xl text-blue-400"></i>
+        <h1 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
+          BOUCTON_AI_WORLD
+        </h1>
+      </div>
+      <a
+        href="/BOUCTON_AI_WORLD/"  <!-- Lien vers ton app React (après déploiement) -->
+        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center gap-2"
+      >
+        <i class="fas fa-rocket"></i> Lancer l'App
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="min-h-screen flex items-center justify-center p-4 pt-20">
+    <div class="max-w-4xl text-center">
+      <h1 class="text-5xl md:text-7xl font-black mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-white">
+        L'Écosystème IA<br />pour Médecins & Chercheurs
+      </h1>
+      <p class="text-xl text-slate-400 mb-8 max-w-2xl mx-auto">
+        Une plateforme **interactive, modulaire et pédagogique** pour maîtriser l'IA en médecine, sans dispersion cognitive.
+      </p>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a
+          href="/BOUCTON_AI_WORLD/"
+          class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center gap-2"
+        >
+          <i class="fas fa-play"></i> Démarrer
+        </a>
+        <a
+          href="#modules"
+          class="px-6 py-3 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition flex items-center gap-2"
+        >
+          <i class="fas fa-cubes"></i> Explorer les Modules
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modules Section -->
+  <section id="modules" class="py-20 px-4 max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-12">Modules Disponibles</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Dr GOURMAND -->
+      <div class="glass p-6 rounded-2xl hover:shadow-2xl transition-all">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-500 to-red-600 flex items-center justify-center">
+            <i class="fas fa-user-doctor text-white"></i>
+          </div>
+          <h3 class="text-xl font-bold">Dr GOURMAND</h3>
+        </div>
+        <p class="text-slate-400 mb-4">
+          Simulateur clinique **réaliste** avec scénarios dynamiques, contraintes aléatoires et débriefings détaillés.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 bg-slate-800 text-xs rounded-full">IA: Gemini</span>
+          <span class="px-3 py-1 bg-slate-800 text-xs rounded-full">Cas cliniques</span>
+          <span class="px-3 py-1 bg-slate-800 text-xs rounded-full">Feedback structuré</span>
+        </div>
+      </div>
+
+      <!-- META-IA -->
+      <div class="glass p-6 rounded-2xl hover:shadow-2xl transition-all">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-500 to-blue-600 flex items-center justify-center">
+            <i class="fas fa-cogs text-white"></i>
+          </div>
+          <h3 class="text-xl font-bold">META-IA</h3>
+        </div>
+        <p class="text-slate-400 mb-4">
+          Méthodologie **standardisée** pour créer des workflows IA optimisés, avec exemples concrets et visualisations.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 bg-slate-800 text-xs rounded-full">Workflows</span>
+          <span class="px-3 py-1 bg-slate-800 text-xs rounded-full">Diagrammes Mermaid</span>
+          <span class="px-3 py-1 bg-slate-800 text-xs rounded-full">Prompts prêts à l'emploi</span>
+        </div>
+      </div>
+
+      <!-- CODEX IA -->
+      <div class="glass p-6 rounded-2xl hover:shadow-2xl transition-all">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
+            <i class="fas fa-code text-white"></i>
+          </div>
+          <h3 class="text-xl font-bold">CODEX IA</h3>
+        </div>
+        <p class="text-slate-400 mb-4">
+          Bibliothèque de **prompts catégorisés** (médecine, sciences, art), personnalisables et prêts à l'emploi.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 bg-slate-800 text-xs rounded-full">Multi-domaine</span>
+          <span class="px-3 py-1 bg-slate-800 text-xs rounded-full">Templates</span>
+          <span class="px-3 py-1 bg-slate-800 text-xs rounded-full">Exemples concrets</span>
+        </div>
+      </div>
+
+      <!-- BIBLIO GOURMANDE -->
+      <div class="glass p-6 rounded-2xl hover:shadow-2xl transition-all">
+        <div class="flex items-center gap-4 mb-4">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-500 to-emerald-600 flex items-center justify-center">
+            <i class="fas fa-book-medical text-white"></i>
+          </div>
+          <h3 class="text-xl font-bold">BIBLIO GOURMANDE</h3>
+        </div>
+        <p class="text-slate-400 mb-4">
+          Base de connaissances médicales **automatisée** (Zotero → NotebookLM), avec synthèses et références.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span class="px-3 py-1 bg-slate-800 text-xs rounded-full">Zotero</span>
+          <span class="px-3 py-1 bg-slate-800 text-xs rounded-full">NotebookLM</span>
+          <span class="px-3 py-1 bg-slate-800 text-xs rounded-full">Références PNDS/HAS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="glass p-6 text-center mt-20">
+    <p class="text-slate-400">
+      © 2026 BOUCTON_AI_WORLD. Un projet par Yannis Jamali.
+      <a href="https://github.com/boucton/BOUCTON_AI_WORLD" class="text-blue-400 hover:underline ml-2">
+        <i class="fab fa-github"></i> Code source
+      </a>
+    </p>
+  </footer>
+</body>
+</html>
