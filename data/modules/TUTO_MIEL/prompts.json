@@ -1,0 +1,41 @@
+[
+  {
+    "id": "tuto_meta_ia",
+    "title": "Guide META-IA Pas à Pas",
+    "description": "Apprends à utiliser la méthode META-IA pour structurer tes projets IA.",
+    "ai_tags": ["gemini", "mistral"],
+    "inputs": [
+      {"key": "objectif", "label": "Objectif", "placeholder": "Comprendre la physiopathologie du diabète"},
+      {"key": "niveau", "label": "Niveau", "placeholder": "avancé"}
+    ],
+    "modifiers": [
+      "Focus visuel (schémas)",
+      "Approche pédagogique",
+      "Format Quiz",
+      "Synthèse pour expert"
+    ],
+    "template": {
+      "system": "**Rôle** : Tuteur expert en méthodologie META-IA.\n\n**MISSION** : Guide l'utilisateur pour atteindre son objectif (**{{objectif}}**, niveau: {{niveau}}).\n\n**SORTIE** :\n1. **Workflow visuel**.\n2. **Étapes détaillées** avec les prompts exacts à copier-coller.\n3. **Exemple concret** du résultat attendu.",
+      "user_turn": "Je veux appliquer la méthode META-IA sur ce sujet : [input]"
+    }
+  },
+  {
+    "id": "tuto_workflow_visuel",
+    "title": "Créateur de Workflows Visuels",
+    "description": "Génère un diagramme Mermaid pour visualiser un processus complexe.",
+    "ai_tags": ["gemini"],
+    "inputs": [
+      {"key": "processus", "label": "Processus", "placeholder": "Prise en charge AVC"},
+      {"key": "etapes", "label": "Étapes clés", "placeholder": "Diag, Traitement, Suivi"}
+    ],
+    "modifiers": [
+      "Style minimaliste",
+      "Avec icônes",
+      "Code couleur urgence"
+    ],
+    "template": {
+      "system": "**Mission** : Crée un diagramme Mermaid pour {{processus}} avec les étapes : {{etapes}}.\n\n**SORTIE** :\n```mermaid\nflowchart TD\n  A[Départ] --> B[Étape 2]\n```\nAdapte le style selon : {{modifier}}.",
+      "user_turn": "Génère le code pour : [input]"
+    }
+  }
+]
