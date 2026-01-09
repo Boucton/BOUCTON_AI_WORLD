@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+  "modules": [
+    {
+      "id": "dr_gourmand",
+      "title": "Dr GOURMAND",
+      "description": "Simulateur clinique avancé avec scénarios réalistes, feedback structuré et intégration de contraintes aléatoires.",
+      "icon": "fa-user-doctor",
+      "color": "rose",
+      "content_file": "data/modules/dr_gourmand/content.md",
+      "prompts_file": "data/modules/dr_gourmand/prompts.json",
+      "is_core": true,
+      "img": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "id": "meta_ia",
+      "title": "META-IA",
+      "description": "Hub de prompting intelligent pour créer des workflows IA optimisés, avec méthodologie structurée et exemples concrets.",
+      "icon": "fa-cogs",
+      "color": "sky",
+      "content_file": "data/modules/meta_ia/content.md",
+      "prompts_file": "data/modules/meta_ia/prompts.json",
+      "is_core": true,
+      "img": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "id": "codex_ia",
+      "title": "CODEX IA",
+      "description": "Bibliothèque de prompts prêts à l'emploi, catégorisés par domaine (médecine, sciences, art) et personnalisables.",
+      "icon": "fa-code",
+      "color": "indigo",
+      "content_file": "data/modules/codex_ia/content.md",
+      "prompts_file": "data/modules/codex_ia/prompts.json",
+      "img": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "id": "biblio_gourmande",
+      "title": "BIBLIO GOURMANDE",
+      "description": "Base de connaissances médicales avec flux automatisés depuis Zotero, articles classés et synthèses IA.",
+      "icon": "fa-book-medical",
+      "color": "teal",
+      "content_file": "data/modules/biblio_gourmande/content.md",
+      "img": "https://images.unsplash.com/photo-1522252230593-54b523e27af4?auto=format&fit=crop&w=1200&q=80"
+    },
+    {
+      "id": "tuto_miel",
+      "title": "TUTO_MIEL",
+      "description": "Guide complet pour maîtriser BOUCTON_AI_WORLD, avec méthodologie META-IA, workflows et exemples pas à pas.",
+      "icon": "fa-book-open",
+      "color": "amber",
+      "content_file": "data/modules/tuto_miel/content.md",
+      "is_core": true,
+      "img": "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1200&q=80"
+    }
+  ],
+  "easter_eggs": [
+    {
+      "trigger": "double_click_sablier",
+      "action": "unlock_time_module",
+      "module_id": "time",
+      "icon": "fa-hourglass-half",
+      "color": "amber"
+    }
+  ]
+}
