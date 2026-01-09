@@ -143,6 +143,7 @@ const App = () => {
 
         <Launchpad />
         <NotesPanel isOpen={isNotesOpen} onClose={() => setIsNotesOpen(false)} />
+        <SecretLibrary xp={xp} />
 
       </div>
     </div>
