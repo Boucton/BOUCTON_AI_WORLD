@@ -8,15 +8,25 @@ import Header from './components/Header';
 import Launchpad from './components/Launchpad';
 
 const App = () => {
+  // --- PERSISTANCE DE L'ÉTAT (Le Cerveau qui n'oublie pas) ---
+  // On initialise l'état en lisant le localStorage s'il existe
+  const [view, setView] = useState(() => localStorage.getItem('boucton_view') || 'home'); 
+  const [activeModule, setActiveModule] = useState(() => localStorage.getItem('boucton_module') || null);
   const [modules, setModules] = useState([]);
-  const [activeModule, setActiveModule] = useState(null);
-  const [view, setView] = useState('home'); 
   const [mysteryUnlocked, setMysteryUnlocked] = useState(false);
   const [userData, setUserData] = useState({});
   
-  // Gamification
+  // Gamification (XP)
   const [xp, setXp] = useState(() => parseInt(localStorage.getItem('boucton_xp') || '0'));
   
+  // Sauvegarde automatique de la navigation
+  useEffect(() => {
+    localStorage.setItem('boucton_view', view);
+    if (activeModule) {
+        localStorage.setItem('boucton_module', activeModule);
+    }
+  }, [view, activeModule]);
+
   const getLevel = (xp) => {
     if (xp < 100) return "Interne IA";
     if (xp < 500) return "Chef de Clinique IA";
@@ -30,10 +40,9 @@ const App = () => {
     localStorage.setItem('boucton_xp', newXp.toString());
   };
 
-  // Chargement des données & Nettoyage
+  // Chargement des données
   useEffect(() => {
     const loadModules = async () => {
-      // Importation dynamique via Vite
       const allMarkdown = import.meta.glob('../data/modules/**/*.md', { as: 'raw' });
       const allPrompts = import.meta.glob('../data/modules/**/*.json');
 
@@ -43,22 +52,13 @@ const App = () => {
             const mdPath = `../${module.content_file}`;
             const jsonPath = `../${module.prompts_file}`;
 
-            // Vérification de l'existence des fichiers
             if (!allMarkdown[mdPath] || !allPrompts[jsonPath]) {
                 console.warn(`Module incomplet : ${module.id}`);
                 return module;
             }
 
-            // Chargement contenu brut
             const rawContent = await allMarkdown[mdPath]();
-            
-            // --- NETTOYAGE FRONTMATTER (ROBUSTE) ---
-            // Supprime tout ce qui se trouve entre deux '---' si cela apparaît au début du fichier
-            // Supprime aussi les lignes vides au début
-            const cleanContent = rawContent
-                .replace(/^---[\s\S]*?---\s*/, '') // Supprime le bloc YAML
-                .trim(); // Supprime les espaces vides avant/après
-
+            const cleanContent = rawContent.replace(/^---[\s\S]*?---\s*/, '').trim();
             const promptsModule = await allPrompts[jsonPath]();
 
             return { ...module, content: cleanContent, prompts: promptsModule.default };
@@ -73,6 +73,7 @@ const App = () => {
     loadModules();
   }, []);
 
+  // Handlers de Navigation
   const handleStart = () => {
     addXp(10);
     setView('dashboard');
@@ -91,6 +92,7 @@ const App = () => {
      }
   };
 
+  // Si on est sur la home, pas besoin de charger toute l'interface lourde
   if (view === 'home') {
     return (
       <Home 
@@ -101,10 +103,12 @@ const App = () => {
     );
   }
 
+  // Application Principale
   return (
     <div className="flex flex-col h-screen bg-slate-950 text-white overflow-hidden font-sans selection:bg-blue-500/30">
       <div className="flex flex-1 overflow-hidden relative">
         
+        {/* Navigation Latérale */}
         <Sidebar
           modules={modules}
           activeModule={activeModule}
@@ -114,6 +118,7 @@ const App = () => {
           onMysteryTrigger={handleMysteryTrigger}
         />
         
+        {/* Contenu Central */}
         <div className="flex-1 flex flex-col ml-72 h-screen relative z-0 bg-slate-950">
             <Header xp={xp} level={getLevel(xp)} />
 
@@ -130,6 +135,7 @@ const App = () => {
             </main>
         </div>
 
+        {/* Le Launchpad (Toujours visible) */}
         <Launchpad />
 
       </div>
