@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm'; 
 import PromptCard from './PromptCard';
 import VitalMonitor from './VitalMonitor';
+import ProgressBar from './ProgressBar';
 
 const ModuleView = ({ module, allModules, userData, setUserData, setActiveModule }) => {
   const [activePrompt, setActivePrompt] = useState(null);
@@ -102,7 +103,9 @@ const ModuleView = ({ module, allModules, userData, setUserData, setActiveModule
                 </p>
              </div>
         </div>
-
+        
+        <ProgressBar moduleId={module.id} totalSections={10} />
+        
         {module.id === 'dr_gourmand' && <VitalMonitor />}
 
         {/* CONTENU TEXTUEL */}
