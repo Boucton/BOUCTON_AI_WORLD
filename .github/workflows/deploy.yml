@@ -4,6 +4,11 @@ on:
   push:
     branches: ["main"]  # Se déclenche quand tu pushes sur la branche main
 
+permissions:
+  contents: read
+  pages: write      # Permet d'écrire sur GitHub Pages
+  id-token: write  # <-- AJOUT CRUCIAL : Autorise l'accès au token d'authentification
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
