@@ -47,9 +47,10 @@ const App = () => {
 
   useEffect(() => {
     const loadModules = async () => {
-      const allMarkdown = import.meta.glob('../data/modules/**/*.md', { as: 'raw' });
+     const allMarkdown = import.meta.glob('../data/modules/**/*.md', { query: '?raw', import: 'default' });
       const allPrompts = import.meta.glob('../data/modules/**/*.json');
-      const loadedModules = await Promise.all(config.modules.map(async (module) => {
+      const loadedModules = await Promise.all(
+        config.modules.map(async (module) => {
           try {
             const mdPath = `../${module.content_file}`;
             const jsonPath = `../${module.prompts_file}`;
@@ -58,8 +59,12 @@ const App = () => {
             const cleanContent = rawContent.replace(/^---[\s\S]*?---\s*/, '').trim();
             const promptsModule = await allPrompts[jsonPath]();
             return { ...module, content: cleanContent, prompts: promptsModule.default };
-          } catch (error) { return module; }
-        }));
+          } catch (error) {
+            console.error("Erreur module:", module.id, error);
+            return module;
+          }
+        })
+      );
       setModules(loadedModules);
     };
     loadModules();
