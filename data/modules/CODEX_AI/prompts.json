@@ -1,0 +1,23 @@
+[
+  {
+    "id": "codex_medecine",
+    "title": "Prompts Médicaux",
+    "description": "Bibliothèque de prompts pour la médecine interne, urgences et spécialités.",
+    "ai_tags": ["gemini", "mistral"],
+    "inputs": [
+      {"key": "specialite", "label": "Spécialité", "placeholder": "Cardiologie"},
+      {"key": "sujet", "label": "Sujet", "placeholder": "Infarctus du myocarde"}
+    ],
+    "modifiers": [
+      "Focus diagnostic différentiel",
+      "Approche thérapeutique (protocoles)",
+      "Cas clinique typique",
+      "Recommandations HAS 2024",
+      "Traduction en anglais médical"
+    ],
+    "template": {
+      "system": "Génère un prompt **optimisé** pour explorer le sujet suivant en {{specialite}}:\n\n**SUJET**: {{sujet}}\n**ANGLE**: {{modifier}}\n\n**STRUCTURE ATTENDUE**:\n1. **Contexte**: Définition et épidémiologie (3 lignes max).\n2. **Diagnostic**: Critères clés (tableau comparatif si différentiel).\n3. **Prise en charge**: Protocole étape par étape (avec niveaux de preuve).\n4. **Pièges**: Erreurs fréquentes et comment les éviter.\n5. **Références**: Liens vers HAS/PNDS/PubMed (format Markdown).\n\n**EXEMPLE DE SORTIE**:\n```markdown\n### Infarctus du Myocarde (2024)\n\n**Contexte**: 1ère cause de mortalité mondiale. 70 000 cas/an en France.\n\n**Diagnostic**:\n| Critère          | Sensibilité | Spécificité |\n|------------------|-------------|-------------|\n| Douleur thoracique | 90%         | 50%         |\n| ECG (sous-décalage) | 60%      | 95%         |\n\n**Prise en charge**:\n1. **O₂ si SpO₂ <90%** (Grade A).\n2. **Aspirine 250mg IV** (Grade A).\n...",
+      "user_turn": "Affine le prompt en fonction de la demande utilisateur: [input]\n→ Ajoute des **détails spécifiques** (ex: 'inclure les biomarqueurs émergents')."
+    }
+  }
+]
